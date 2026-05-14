@@ -87,11 +87,9 @@ class RecipeFinder extends HTMLElement {
     const weather = Math.random() > 0.5 ? "Rainy" : "Sunny";
     
     let filtered = recipes.filter(r => r.tags.includes(mealTime));
-    if (weather === "Rainy") {
-      filtered = recipes.filter(r => r.category === "Chinese" || r.tags.includes("Warm"));
-    }
+    if (filtered.length === 0) filtered = recipes;
 
-    this.state.recommendations = (filtered.length > 0 ? filtered : recipes).sort(() => 0.5 - Math.random()).slice(0, 2);
+    this.state.recommendations = filtered.sort(() => 0.5 - Math.random()).slice(0, 2);
     this.state.mealTime = mealTime;
     this.state.weather = weather;
   }
@@ -271,6 +269,15 @@ class RecipeFinder extends HTMLElement {
         .tag-diff.Medium { background: var(--difficulty-medium); }
         .tag-diff.Hard { background: var(--difficulty-hard); }
 
+        .hero-container {
+          margin: 1.5rem 0;
+          border-radius: 20px;
+          overflow: hidden;
+          height: 250px;
+          box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+        .hero-img { width: 100%; height: 100%; object-fit: cover; }
+
         h3 { color: var(--accent-color); margin: 1.5rem 0 0.5rem 0; }
         .ing-list {
           display: grid;
@@ -314,9 +321,9 @@ class RecipeFinder extends HTMLElement {
             <h2 class="recs-title">✨ Recommended for ${this.state.mealTime} in SG</h2>
             <span class="weather-tag">☁️ ${this.state.weather} Choice</span>
           </div>
-          <div class="recs-grid">
+          <div class="recs-grid" id="recs-grid">
             ${this.state.recommendations.map(r => `
-              <div class="rec-item" onclick="this.getRootNode().host.selectRecipe(${JSON.stringify(r).replace(/"/g, '&quot;')})">
+              <div class="rec-item" data-recipe-id="${r.id}">
                 <span class="rec-name">${r.name}</span>
                 <span class="rec-meta">${r.time}m • ${r.difficulty}</span>
               </div>
@@ -327,7 +334,7 @@ class RecipeFinder extends HTMLElement {
         <div class="filters">
           <div class="filter-group">
             <label>Cuisine</label>
-            <select onchange="this.getRootNode().host.updateFilter('category', this.value)">
+            <select id="category-filter">
               <option>All</option>
               <option>Western</option>
               <option>Chinese</option>
@@ -335,7 +342,7 @@ class RecipeFinder extends HTMLElement {
           </div>
           <div class="filter-group">
             <label>Difficulty</label>
-            <select onchange="this.getRootNode().host.updateFilter('difficulty', this.value)">
+            <select id="difficulty-filter">
               <option>All</option>
               <option>Easy</option>
               <option>Medium</option>
@@ -344,17 +351,17 @@ class RecipeFinder extends HTMLElement {
           </div>
           <div class="filter-group">
             <label>Max Time (mins)</label>
-            <input type="number" value="60" min="5" step="5" onchange="this.getRootNode().host.updateFilter('maxTime', parseInt(this.value))">
+            <input type="number" id="time-filter" value="60" min="5" step="5">
           </div>
           <div class="filter-group">
             <label>Custom Ingredients</label>
-            <input type="text" placeholder="e.g. lemon, basil" oninput="this.getRootNode().host.updateTypedIngredients(this.value)">
+            <input type="text" id="ingredients-filter" placeholder="e.g. lemon, basil">
           </div>
           <div class="filter-group full-width">
             <label>Common Pantry Items</label>
             <div class="chips-container" id="common-chips"></div>
           </div>
-          <button class="shuffle-btn" onclick="this.getRootNode().host.findRecipes()">
+          <button class="shuffle-btn" id="shuffle-btn">
             🔀 Find Random Recipe
           </button>
         </div>
@@ -363,7 +370,25 @@ class RecipeFinder extends HTMLElement {
         </div>
       </div>
     `;
+    this.setupEventListeners();
     this.renderCommonChips();
+  }
+
+  setupEventListeners() {
+    this.shadowRoot.getElementById('category-filter').addEventListener('change', (e) => this.updateFilter('category', e.target.value));
+    this.shadowRoot.getElementById('difficulty-filter').addEventListener('change', (e) => this.updateFilter('difficulty', e.target.value));
+    this.shadowRoot.getElementById('time-filter').addEventListener('change', (e) => this.updateFilter('maxTime', parseInt(e.target.value)));
+    this.shadowRoot.getElementById('ingredients-filter').addEventListener('input', (e) => this.updateTypedIngredients(e.target.value));
+    this.shadowRoot.getElementById('shuffle-btn').addEventListener('click', () => this.findRecipes());
+    
+    this.shadowRoot.getElementById('recs-grid').addEventListener('click', (e) => {
+      const item = e.target.closest('.rec-item');
+      if (item) {
+        const id = parseInt(item.dataset.recipeId);
+        const recipe = recipes.find(r => r.id === id);
+        this.selectRecipe(recipe);
+      }
+    });
   }
 
   renderRecipe() {
@@ -407,17 +432,6 @@ class RecipeFinder extends HTMLElement {
               <div class="step-content">
                 <span class="step-number">Step ${index + 1} <span class="step-time">${step.time}</span></span>
                 <p class="step-desc">${step.desc}</p>
-              </div>
-            </div>
-          `).join('')}
-        </div>
-      </div>
-    `;
-  }
-}
-
-customElements.define('recipe-finder', RecipeFinder);
-tep.desc}</p>
               </div>
             </div>
           `).join('')}
