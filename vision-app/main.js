@@ -178,7 +178,9 @@ class VisionClassifier extends HTMLElement {
         await this.init(false); // Load model without webcam
     }
 
-    const image = new Image(400, 400);
+    const image = new Image();
+    image.width = 400;
+    image.height = 400;
     image.src = URL.createObjectURL(file);
     image.onload = async () => {
       const wcContainer = this.shadowRoot.getElementById('webcam-container');
