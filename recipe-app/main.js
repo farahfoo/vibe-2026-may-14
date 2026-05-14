@@ -385,6 +385,11 @@ class RecipeFinder extends HTMLElement {
             <span class="tag tag-time">${r.time} mins</span>
           </div>
         </div>
+        
+        <div class="hero-container">
+          <img src="${r.heroImage}" alt="${r.name}" class="hero-img">
+        </div>
+
         <h3>🛒 Ingredients & Amounts</h3>
         <div class="ing-list">
           ${r.ingredients.map(i => `
@@ -402,6 +407,17 @@ class RecipeFinder extends HTMLElement {
               <div class="step-content">
                 <span class="step-number">Step ${index + 1} <span class="step-time">${step.time}</span></span>
                 <p class="step-desc">${step.desc}</p>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    `;
+  }
+}
+
+customElements.define('recipe-finder', RecipeFinder);
+tep.desc}</p>
               </div>
             </div>
           `).join('')}

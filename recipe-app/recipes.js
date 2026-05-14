@@ -3,6 +3,7 @@ export const recipes = [
     id: 1,
     name: "Classic Beef Burger",
     source: "Inspired by Gordon Ramsay's Ultimate Burger",
+    heroImage: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=800&auto=format",
     category: "Western",
     difficulty: "Medium",
     time: 30,
@@ -19,22 +20,22 @@ export const recipes = [
       {
         desc: "Shape the ground beef into 1-inch thick patties. Season both sides with salt and pepper.",
         time: "5 mins",
-        image: "https://images.unsplash.com/photo-1586190848861-99aa4a171e90?w=400&auto=format"
+        image: "https://img.freepik.com/free-vector/flat-hand-drawn-person-cooking-illustrated_23-2148882755.jpg"
       },
       {
         desc: "Grill the patties over medium-high heat for about 5 minutes per side for medium-rare.",
         time: "10 mins",
-        image: "https://images.unsplash.com/photo-1529692236671-f1f6cf9683ba?w=400&auto=format"
+        image: "https://img.freepik.com/free-vector/delicious-barbecue-party-background_23-2148154133.jpg"
       },
       {
         desc: "Toast the buns on the grill and melt the cheese on top of the patties during the last minute of cooking.",
         time: "2 mins",
-        image: "https://images.unsplash.com/photo-1550547660-d9450f859349?w=400&auto=format"
+        image: "https://img.freepik.com/free-vector/burger-ingredients-collection_23-2148135894.jpg"
       },
       {
         desc: "Assemble your burger with lettuce, tomato, onion, and your favorite sauces.",
         time: "3 mins",
-        image: "https://images.unsplash.com/photo-1571091718767-18b5b1457add?w=400&auto=format"
+        image: "https://img.freepik.com/free-vector/flat-design-fast-food-illustrated_23-2148882885.jpg"
       }
     ]
   },
@@ -42,6 +43,7 @@ export const recipes = [
     id: 2,
     name: "Tomato Pasta",
     source: "Based on Jamie Oliver's 15-Minute Pasta",
+    heroImage: "https://images.unsplash.com/photo-1595295333158-4742f28fbd85?w=800&auto=format",
     category: "Western",
     difficulty: "Easy",
     time: 15,
@@ -58,22 +60,22 @@ export const recipes = [
       {
         desc: "Boil a large pot of salted water and cook the pasta according to package directions.",
         time: "10 mins",
-        image: "https://images.unsplash.com/photo-1551183053-bf91a1d81141?w=400&auto=format"
+        image: "https://img.freepik.com/free-vector/pasta-concept-illustration_114360-10113.jpg"
       },
       {
         desc: "While pasta cooks, sauté minced garlic in olive oil in a pan until fragrant.",
         time: "2 mins",
-        image: "https://images.unsplash.com/photo-1550989460-0adf9ea622e2?w=400&auto=format"
+        image: "https://img.freepik.com/free-vector/flat-hand-drawn-person-cooking-illustrated_23-2148882755.jpg"
       },
       {
         desc: "Add tomato sauce and fresh basil to the pan. Simmer gently.",
         time: "3 mins",
-        image: "https://images.unsplash.com/photo-1595295333158-4742f28fbd85?w=400&auto=format"
+        image: "https://img.freepik.com/free-vector/pasta-ingredients-concept_23-2148545802.jpg"
       },
       {
         desc: "Toss the cooked pasta in the sauce and serve with freshly grated Parmesan.",
         time: "1 min",
-        image: "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=400&auto=format"
+        image: "https://img.freepik.com/free-vector/flat-design-italian-food-background_23-2148154134.jpg"
       }
     ]
   },
@@ -81,6 +83,7 @@ export const recipes = [
     id: 3,
     name: "Kung Pao Chicken",
     source: "Inspired by Ken Hom's Traditional Szechuan Recipes",
+    heroImage: "https://images.unsplash.com/photo-1525755662778-989d0524087e?w=800&auto=format",
     category: "Chinese",
     difficulty: "Hard",
     time: 45,
@@ -97,22 +100,22 @@ export const recipes = [
       {
         desc: "Cube the chicken and marinate with soy sauce, ginger, and a bit of cornstarch.",
         time: "15 mins",
-        image: "https://images.unsplash.com/photo-1526318896980-cf78c088247c?w=400&auto=format"
+        image: "https://img.freepik.com/free-vector/chef-cartoon-style_23-2147515690.jpg"
       },
       {
         desc: "Stir-fry the chicken in a hot wok until golden brown. Remove and set aside.",
         time: "5 mins",
-        image: "https://images.unsplash.com/photo-1512058564366-18510be2db19?w=400&auto=format"
+        image: "https://img.freepik.com/free-vector/flat-design-asian-food-background_23-2148154135.jpg"
       },
       {
         desc: "Sauté dried chilies, ginger, and scallions. Add the chicken back in with more soy sauce.",
         time: "3 mins",
-        image: "https://images.unsplash.com/photo-1623961990059-28356e226a77?w=400&auto=format"
+        image: "https://img.freepik.com/free-vector/illustrated-person-cooking-food_23-2148888062.jpg"
       },
       {
         desc: "Toss in the peanuts and give it a final stir over high heat before serving.",
         time: "2 mins",
-        image: "https://images.unsplash.com/photo-1598515214211-89d3c73ae83b?w=400&auto=format"
+        image: "https://img.freepik.com/free-vector/chinese-food-illustrated_23-2148888063.jpg"
       }
     ]
   },
@@ -120,6 +123,7 @@ export const recipes = [
     id: 4,
     name: "Egg Fried Rice",
     source: "Based on Uncle Roger's Fried Rice Essentials",
+    heroImage: "https://images.unsplash.com/photo-1603133872878-684f208fb84b?w=800&auto=format",
     category: "Chinese",
     difficulty: "Easy",
     time: 10,
@@ -136,22 +140,22 @@ export const recipes = [
       {
         desc: "Whisk eggs and scramble them in a hot wok with oil. Remove and set aside.",
         time: "2 mins",
-        image: "https://images.unsplash.com/photo-1594759023565-3507647228a0?w=400&auto=format"
+        image: "https://img.freepik.com/free-vector/eggs-breakfast-concept-illustration_114360-10114.jpg"
       },
       {
         desc: "Add more oil and stir-fry cold rice, breaking up any clumps.",
         time: "4 mins",
-        image: "https://images.unsplash.com/photo-1603133872878-684f208fb84b?w=400&auto=format"
+        image: "https://img.freepik.com/free-vector/illustrated-chef-cooking-food_23-2148888064.jpg"
       },
       {
         desc: "Add soy sauce, cooked eggs, scallions, and peas. Toss well over high heat.",
         time: "3 mins",
-        image: "https://images.unsplash.com/photo-1512058564366-18510be2db19?w=400&auto=format"
+        image: "https://img.freepik.com/free-vector/flat-design-asian-food-collection_23-2148154136.jpg"
       },
       {
         desc: "Serve immediately while steaming hot.",
         time: "1 min",
-        image: "https://images.unsplash.com/photo-1603133872878-684f208fb84b?w=400&auto=format"
+        image: "https://img.freepik.com/free-vector/flat-hand-drawn-person-cooking-illustrated_23-2148882755.jpg"
       }
     ]
   },
@@ -159,6 +163,7 @@ export const recipes = [
     id: 5,
     name: "Beef Broccoli",
     source: "Based on Woks of Life Top-Rated Stir Fry",
+    heroImage: "https://images.unsplash.com/photo-1541696432-82c6da8ce7bf?w=800&auto=format",
     category: "Chinese",
     difficulty: "Medium",
     time: 25,
@@ -175,22 +180,22 @@ export const recipes = [
       {
         desc: "Slice beef thinly against the grain and toss with cornstarch and a splash of soy sauce.",
         time: "10 mins",
-        image: "https://images.unsplash.com/photo-1603048588665-791ca8aea617?w=400&auto=format"
+        image: "https://img.freepik.com/free-vector/hand-drawn-cooking-food-concept_23-2148888065.jpg"
       },
       {
         desc: "Blanch broccoli florets in boiling water for 2 minutes, then drain.",
         time: "3 mins",
-        image: "https://images.unsplash.com/photo-1458819714733-e5ab3d536722?w=400&auto=format"
+        image: "https://img.freepik.com/free-vector/broccoli-illustration_114360-10115.jpg"
       },
       {
         desc: "Stir-fry beef in a hot wok until browned. Add garlic and ginger.",
         time: "4 mins",
-        image: "https://images.unsplash.com/photo-1512058564366-18510be2db19?w=400&auto=format"
+        image: "https://img.freepik.com/free-vector/flat-design-fast-food-collection_23-2148154137.jpg"
       },
       {
         desc: "Add broccoli and oyster sauce. Stir-fry for another minute until sauce thickens.",
         time: "2 mins",
-        image: "https://images.unsplash.com/photo-1541696432-82c6da8ce7bf?w=400&auto=format"
+        image: "https://img.freepik.com/free-vector/flat-hand-drawn-person-cooking-illustrated_23-2148882755.jpg"
       }
     ]
   },
@@ -198,6 +203,7 @@ export const recipes = [
     id: 6,
     name: "Caesar Salad",
     source: "Classic Caesar Recipe from Food Network",
+    heroImage: "https://images.unsplash.com/photo-1550304943-4f24f54ddde9?w=800&auto=format",
     category: "Western",
     difficulty: "Easy",
     time: 10,
@@ -213,17 +219,17 @@ export const recipes = [
       {
         desc: "Grill chicken breast until cooked through, then slice into strips.",
         time: "7 mins",
-        image: "https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?w=400&auto=format"
+        image: "https://img.freepik.com/free-vector/delicious-barbecue-illustrated_23-2148154138.jpg"
       },
       {
         desc: "Chop romaine lettuce and place in a large bowl.",
         time: "2 mins",
-        image: "https://images.unsplash.com/photo-1556801712-76c8225d36ad?w=400&auto=format"
+        image: "https://img.freepik.com/free-vector/lettuce-illustration_114360-10116.jpg"
       },
       {
         desc: "Toss lettuce with croutons, Parmesan, and Caesar dressing.",
         time: "1 min",
-        image: "https://images.unsplash.com/photo-1550304943-4f24f54ddde9?w=400&auto=format"
+        image: "https://img.freepik.com/free-vector/salad-bowl-concept_23-2148545803.jpg"
       }
     ]
   },
@@ -231,6 +237,7 @@ export const recipes = [
     id: 7,
     name: "Steamed Fish with Soy Sauce",
     source: "Based on New York Times Cooking: Ginger-Soy Fish",
+    heroImage: "https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=800&auto=format",
     category: "Chinese",
     difficulty: "Medium",
     time: 20,
@@ -247,17 +254,17 @@ export const recipes = [
       {
         desc: "Prepare the fish and place ginger slices on top. Setup your steamer.",
         time: "5 mins",
-        image: "https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=400&auto=format"
+        image: "https://img.freepik.com/free-vector/illustrated-chef-steaming-food_23-2148888066.jpg"
       },
       {
         desc: "Steam the fish over boiling water for 10-12 minutes depending on thickness.",
         time: "12 mins",
-        image: "https://images.unsplash.com/photo-1516685018646-527ad952f519?w=400&auto=format"
+        image: "https://img.freepik.com/free-vector/steam-concept-illustration_114360-10117.jpg"
       },
       {
         desc: "Top with fresh scallions and cilantro. Drizzle with soy sauce and hot sesame oil.",
         time: "3 mins",
-        image: "https://images.unsplash.com/photo-1467003909585-2f8a72700288?w=400&auto=format"
+        image: "https://img.freepik.com/free-vector/chinese-kitchen-illustrated_23-2148888067.jpg"
       }
     ]
   },
@@ -265,6 +272,7 @@ export const recipes = [
     id: 8,
     name: "Grilled Steak",
     source: "Based on Serious Eats' Reverse Sear Method",
+    heroImage: "https://images.unsplash.com/photo-1546241072-48010ad28c2c?w=800&auto=format",
     category: "Western",
     difficulty: "Medium",
     time: 20,
@@ -281,22 +289,22 @@ export const recipes = [
       {
         desc: "Season the steak generously with salt and pepper on both sides.",
         time: "2 mins",
-        image: "https://images.unsplash.com/photo-1558030006-450675393462?w=400&auto=format"
+        image: "https://img.freepik.com/free-vector/flat-design-fast-food-collection_23-2148154139.jpg"
       },
       {
         desc: "Sear the steak in a very hot cast iron skillet for 3 minutes per side.",
         time: "6 mins",
-        image: "https://images.unsplash.com/photo-1546241072-48010ad28c2c?w=400&auto=format"
+        image: "https://img.freepik.com/free-vector/grill-concept-illustration_114360-10118.jpg"
       },
       {
         desc: "Add butter, garlic, and rosemary. Baste the steak for 2 more minutes.",
         time: "2 mins",
-        image: "https://images.unsplash.com/photo-1600891964599-f61ba0e24092?w=400&auto=format"
+        image: "https://img.freepik.com/free-vector/illustrated-person-cooking-food_23-2148888062.jpg"
       },
       {
         desc: "Remove from heat and let the steak rest for at least 5 minutes before slicing.",
         time: "10 mins",
-        image: "https://images.unsplash.com/photo-1544025162-d76694265947?w=400&auto=format"
+        image: "https://img.freepik.com/free-vector/flat-hand-drawn-person-cooking-illustrated_23-2148882755.jpg"
       }
     ]
   }
