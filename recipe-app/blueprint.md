@@ -1,37 +1,19 @@
-
-# Project Blueprint: Smart Recipe Finder
+# Project Blueprint
 
 ## Overview
-A vibrant, interactive web application that helps users decide what to cook based on their available time, ingredients, and preferred cuisine.
 
-## Features
-- **Daily Recommendations**: Dynamic suggestions based on Singapore's current time (Breakfast/Lunch/Dinner) and weather scenarios.
-- **Source Attribution**: Recipes include citations from top-reviewed sources (e.g., NYT Cooking, Gordon Ramsay) in italics.
-- **Smart Filtering**: Filter by Category (Western/Chinese), Difficulty (Easy/Medium/Hard), and Max Cooking Time.
-- **Ingredient Matching**: 
-    - **Custom Ingredients**: Input specific items you have in your fridge.
-    - **Common Pantry Items**: Interactive chips for popular items (Egg, Garlic, Rice, etc.) for one-click selection.
-- **Randomize/Shuffle**: Quickly find a random recipe that fits your current constraints.
-- **Responsive Design**: Mobile-friendly layout with modern typography and animations.
-- **Day/Night Theme**: Persistent theme switching with a sleek floating toggle.
+This project is a "smart" recipe finder that suggests recipes based on ingredients the user has on hand.
 
-## Tech Stack
-- **HTML5**: Semantic structure.
-- **CSS3**: Modern layouts using CSS Grid, logical properties, and theme variables.
-- **JavaScript (ES Modules)**: Modular code structure with Web Components.
-- **Custom Elements**: `<recipe-finder>` and `<theme-toggle>`.
+## Implemented Features
 
-## Data Structure
-Recipes are stored in `recipes.js` with the following attributes:
-- `id`: Unique identifier.
-- `name`: Dish title.
-- `category`: Cuisine type.
-- `difficulty`: Easy, Medium, or Hard.
-- `time`: Preparation + cooking time in minutes.
-- `ingredients`: List of required items.
-- `instructions`: Step-by-step guide.
+- **Ingredient-based search**: Users can enter a list of ingredients and the app will suggest recipes that can be made with them.
+- **Random recipe suggestion**: If no ingredients are entered, the app will suggest a random recipe.
+- **Modern UI**: The app features a clean, modern interface with a dark mode theme toggle.
+- **Web Components**: The UI is built using Web Components for better organization and reusability.
 
-## Design Philosophy
-- **Vibrant & Playful**: Warm colors and bouncy animations to make cooking feel fun.
-- **Aesthetic**: Clean cards with deep shadows and clear visual hierarchy.
-- **User-Centric**: Minimal steps to get a result—just click "Shuffle"!
+## Current Plan
+
+### Add Disqus Comment Section
+
+- **`index.html`**: Add the Disqus comment section to the bottom of the page.
+- **`blueprint.md`**: Update the blueprint to include the new feature.
