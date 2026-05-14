@@ -104,6 +104,7 @@ class VisionClassifier extends HTMLElement {
     this.modelURL = "https://teachablemachine.withgoogle.com/models/Ywn-ZzwDh/";
     this.model = null;
     this.webcam = null;
+    this.uploadedImage = null;
     this.labelContainer = null;
   }
 
@@ -111,24 +112,21 @@ class VisionClassifier extends HTMLElement {
     this.render();
     const script = document.createElement('script');
     script.src = 'https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest/dist/teachablemachine-image.min.js';
-    script.onload = () => {
-      // The library is loaded, you can now safely call the init function
-    };
     this.shadowRoot.appendChild(script);
   }
 
   async init(useWebcam = true) {
-    const btn = this.shadowRoot.getElementById('start-btn');
-    btn.style.display = 'none';
+    this.shadowRoot.getElementById('initial-buttons').style.display = 'none';
 
-    const modelURL = this.modelURL + "model.json";
-    const metadataURL = this.modelURL + "metadata.json";
-
-    this.model = await window.tmImage.load(modelURL, metadataURL);
-    const maxPredictions = this.model.getTotalClasses();
+    if (!this.model) {
+        const modelURL = this.modelURL + "model.json";
+        const metadataURL = this.modelURL + "metadata.json";
+        this.model = await window.tmImage.load(modelURL, metadataURL);
+    }
 
     this.labelContainer = this.shadowRoot.getElementById('label-container');
-    this.labelContainer.innerHTML = ''; // Clear previous predictions
+    this.labelContainer.innerHTML = '';
+    const maxPredictions = this.model.getTotalClasses();
     for (let i = 0; i < maxPredictions; i++) {
         const bar = document.createElement('div');
         bar.className = 'prediction-bar';
@@ -137,14 +135,14 @@ class VisionClassifier extends HTMLElement {
     }
 
     if (useWebcam) {
+        this.shadowRoot.getElementById('reset-button-container').style.display = 'flex';
         const flip = true;
         this.webcam = new window.tmImage.Webcam(400, 400, flip);
         await this.webcam.setup();
         await this.webcam.play();
         
-        this.shadowRoot.getElementById('webcam-placeholder').style.display = 'none';
         const wcContainer = this.shadowRoot.getElementById('webcam-container');
-        wcContainer.innerHTML = ''; // Clear placeholder
+        wcContainer.innerHTML = '';
         wcContainer.appendChild(this.webcam.canvas);
 
         window.requestAnimationFrame(() => this.loop());
@@ -152,11 +150,11 @@ class VisionClassifier extends HTMLElement {
   }
 
   async loop() {
-    if (this.webcam) {
+    if (this.webcam && this.webcam.canvas) {
       this.webcam.update();
       await this.predict(this.webcam.canvas);
       window.requestAnimationFrame(() => this.loop());
-    }
+    } 
   }
 
   async predict(imageElement) {
@@ -174,33 +172,60 @@ class VisionClassifier extends HTMLElement {
     const file = event.target.files[0];
     if (!file) return;
 
-    if (!this.model) {
-        await this.init(false); // Load model without webcam
-    }
+    this.uploadedImage = new Image();
+    this.uploadedImage.width = 400;
+    this.uploadedImage.height = 400;
+    this.uploadedImage.src = URL.createObjectURL(file);
 
-    const image = new Image();
-    image.width = 400;
-    image.height = 400;
-    image.src = URL.createObjectURL(file);
-    image.onload = async () => {
+    this.uploadedImage.onload = () => {
       const wcContainer = this.shadowRoot.getElementById('webcam-container');
-      wcContainer.innerHTML = ''; // Clear webcam/placeholder
-      wcContainer.appendChild(image);
-      await this.predict(image);
+      wcContainer.innerHTML = ''; 
+      wcContainer.appendChild(this.uploadedImage);
+
+      this.shadowRoot.getElementById('initial-buttons').style.display = 'none';
+      this.shadowRoot.getElementById('assessment-buttons').style.display = 'flex';
+      this.shadowRoot.getElementById('label-container').innerHTML = '';
     }
+  }
+  
+  async assessUploadedImage() {
+    if (!this.uploadedImage) return;
+
+    const assessBtn = this.shadowRoot.getElementById('assess-btn');
+    assessBtn.disabled = true;
+    assessBtn.textContent = 'Assessing...';
+
+    if (!this.model) {
+        await this.init(false);
+    }
+    
+    await this.predict(this.uploadedImage);
+
+    assessBtn.textContent = 'Assess Picture';
+    assessBtn.disabled = false;
+  }
+
+  reset() {
+    if (this.webcam) {
+        this.webcam.stop();
+    }
+    this.webcam = null;
+    this.uploadedImage = null;
+    this.render(); // Re-render to restore initial state
   }
 
   render() {
     this.shadowRoot.innerHTML = \`
       <style>
         .card { background: var(--card-bg); padding: 2rem; border-radius: 24px; box-shadow: var(--card-shadow); text-align: center; }
-        #webcam-container { margin: 1.5rem auto; border-radius: 16px; overflow: hidden; width: 400px; height: 400px; background: #000; box-shadow: 0 8px 24px rgba(0,0,0,0.1); }
+        #webcam-container { position: relative; margin: 1.5rem auto; border-radius: 16px; overflow: hidden; width: 400px; height: 400px; background: #000; box-shadow: 0 8px 24px rgba(0,0,0,0.1); }
         canvas, img { width: 100%; height: 100%; object-fit: cover; }
         #webcam-placeholder { height: 100%; display: flex; align-items: center; justify-content: center; color: #666; flex-direction: column; gap: 1rem; }
         .button-container { display: flex; justify-content: center; gap: 1rem; margin-top: 1rem; }
         .action-btn { background: var(--accent-color); color: white; border: none; padding: 1rem 2rem; border-radius: 12px; font-weight: 700; font-size: 1rem; cursor: pointer; transition: all 0.2s; }
         .action-btn:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 8px 16px rgba(108, 92, 231, 0.4); }
         .action-btn:disabled { opacity: 0.7; cursor: wait; }
+        .reset-btn { background: #6c757d; }
         #label-container { margin-top: 2rem; display: grid; gap: 0.8rem; max-width: 500px; margin-left: auto; margin-right: auto; }
         .prediction-bar { display: grid; grid-template-columns: 100px 1fr 50px; align-items: center; gap: 1rem; text-align: left; }
         .label { font-weight: 700; font-size: 0.9rem; }
@@ -216,10 +241,17 @@ class VisionClassifier extends HTMLElement {
             <p style="font-size: 0.8rem; opacity: 0.6">Start with your webcam or upload a picture</p>
           </div>
         </div>
-        <div class="button-container">
+        <div class="button-container" id="initial-buttons">
           <button class="action-btn" id="start-btn" onclick="this.getRootNode().host.init(true)">Use Webcam</button>
           <input type="file" id="image-upload" accept="image/*" style="display: none;" onchange="this.getRootNode().host.handleImageUpload(event)">
           <button class="action-btn" onclick="this.getRootNode().host.shadowRoot.getElementById('image-upload').click()">Upload Picture</button>
+        </div>
+        <div class="button-container" id="assessment-buttons" style="display: none;">
+            <button class="action-btn" id="assess-btn" onclick="this.getRootNode().host.assessUploadedImage()">Assess Picture</button>
+            <button class="action-btn reset-btn" onclick="this.getRootNode().host.reset()">Reset</button>
+        </div>
+        <div class="button-container" id="reset-button-container" style="display: none;">
+            <button class="action-btn reset-btn" onclick="this.getRootNode().host.reset()">Reset</button>
         </div>
         <div id="label-container"></div>
       </div>
@@ -227,3 +259,4 @@ class VisionClassifier extends HTMLElement {
   }
 }
 customElements.define('vision-classifier', VisionClassifier);
+
