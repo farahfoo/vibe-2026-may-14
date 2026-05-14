@@ -2,9 +2,11 @@ export const recipes = [
   {
     id: 1,
     name: "Classic Beef Burger",
+    source: "Inspired by Gordon Ramsay's Ultimate Burger",
     category: "Western",
     difficulty: "Medium",
     time: 30,
+    tags: ["Lunch", "Dinner"],
     ingredients: ["Ground Beef", "Burger Buns", "Lettuce", "Tomato", "Cheese", "Onion"],
     steps: [
       {
@@ -32,9 +34,11 @@ export const recipes = [
   {
     id: 2,
     name: "Tomato Pasta",
+    source: "Based on Jamie Oliver's 15-Minute Pasta",
     category: "Western",
     difficulty: "Easy",
     time: 15,
+    tags: ["Lunch", "Dinner", "Quick"],
     ingredients: ["Pasta", "Tomato Sauce", "Garlic", "Basil", "Olive Oil", "Parmesan"],
     steps: [
       {
@@ -62,9 +66,11 @@ export const recipes = [
   {
     id: 3,
     name: "Kung Pao Chicken",
+    source: "Inspired by Ken Hom's Traditional Szechuan Recipes",
     category: "Chinese",
     difficulty: "Hard",
     time: 45,
+    tags: ["Dinner"],
     ingredients: ["Chicken", "Peanuts", "Dried Chilies", "Soy Sauce", "Ginger", "Scallions"],
     steps: [
       {
@@ -92,9 +98,11 @@ export const recipes = [
   {
     id: 4,
     name: "Egg Fried Rice",
+    source: "Based on Uncle Roger's Fried Rice Essentials",
     category: "Chinese",
     difficulty: "Easy",
     time: 10,
+    tags: ["Breakfast", "Lunch", "Quick"],
     ingredients: ["Rice", "Egg", "Soy Sauce", "Scallions", "Oil", "Peas"],
     steps: [
       {
@@ -122,9 +130,11 @@ export const recipes = [
   {
     id: 5,
     name: "Beef Broccoli",
+    source: "Based on Woks of Life Top-Rated Stir Fry",
     category: "Chinese",
     difficulty: "Medium",
     time: 25,
+    tags: ["Lunch", "Dinner"],
     ingredients: ["Beef", "Broccoli", "Oyster Sauce", "Garlic", "Ginger", "Cornstarch"],
     steps: [
       {
@@ -152,9 +162,11 @@ export const recipes = [
   {
     id: 6,
     name: "Caesar Salad",
+    source: "Classic Caesar Recipe from Food Network",
     category: "Western",
     difficulty: "Easy",
     time: 10,
+    tags: ["Lunch", "Light"],
     ingredients: ["Romaine Lettuce", "Croutons", "Parmesan", "Caesar Dressing", "Chicken Breast"],
     steps: [
       {
@@ -177,9 +189,11 @@ export const recipes = [
   {
     id: 7,
     name: "Steamed Fish with Soy Sauce",
+    source: "Based on New York Times Cooking: Ginger-Soy Fish",
     category: "Chinese",
     difficulty: "Medium",
     time: 20,
+    tags: ["Dinner", "Light"],
     ingredients: ["White Fish", "Soy Sauce", "Ginger", "Scallions", "Cilantro", "Sesame Oil"],
     steps: [
       {
@@ -202,9 +216,11 @@ export const recipes = [
   {
     id: 8,
     name: "Grilled Steak",
+    source: "Based on Serious Eats' Reverse Sear Method",
     category: "Western",
     difficulty: "Medium",
     time: 20,
+    tags: ["Dinner"],
     ingredients: ["Steak", "Salt", "Pepper", "Garlic", "Rosemary", "Butter"],
     steps: [
       {

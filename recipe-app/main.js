@@ -68,12 +68,35 @@ class RecipeFinder extends HTMLElement {
       maxTime: 60,
       typedIngredients: [],
       selectedCommon: new Set(),
-      currentRecipe: null
+      currentRecipe: null,
+      recommendations: []
     };
   }
 
   connectedCallback() {
+    this.generateDailyRecs();
     this.render();
+  }
+
+  generateDailyRecs() {
+    const hour = new Date().getHours();
+    let mealTime = "Dinner";
+    if (hour < 11) mealTime = "Breakfast";
+    else if (hour < 16) mealTime = "Lunch";
+
+    // Simulate weather - in a real app, this could call a weather API
+    const weather = Math.random() > 0.5 ? "Rainy" : "Sunny";
+    
+    let filtered = recipes.filter(r => r.tags.includes(mealTime));
+    
+    // Add weather-based flair
+    if (weather === "Rainy") {
+      filtered = recipes.filter(r => r.category === "Chinese" || r.tags.includes("Warm"));
+    }
+
+    this.state.recommendations = filtered.sort(() => 0.5 - Math.random()).slice(0, 2);
+    this.state.mealTime = mealTime;
+    this.state.weather = weather;
   }
 
   updateFilter(key, value) {
@@ -132,8 +155,16 @@ class RecipeFinder extends HTMLElement {
     this.renderRecipe();
   }
 
+  selectRecipe(recipe) {
+    this.state.currentRecipe = recipe;
+    this.renderRecipe();
+    // Scroll to display
+    this.shadowRoot.getElementById('display').scrollIntoView({ behavior: 'smooth' });
+  }
+
   renderCommonChips() {
     const container = this.shadowRoot.getElementById('common-chips');
+    if (!container) return;
     container.innerHTML = this.commonIngredients.map(ing => {
       const active = this.state.selectedCommon.has(ing.toLowerCase()) ? 'active' : '';
       return `<span class="chip ${active}" onclick="this.getRootNode().host.toggleCommonIngredient('${ing}')">${ing}</span>`;
@@ -144,6 +175,29 @@ class RecipeFinder extends HTMLElement {
     this.shadowRoot.innerHTML = `
       <style>
         .container { display: grid; gap: 2rem; }
+        
+        .recs-section {
+          background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+          padding: 1.5rem;
+          border-radius: 20px;
+          color: white;
+          box-shadow: var(--card-shadow);
+        }
+        .recs-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
+        .recs-title { margin: 0; font-size: 1.2rem; }
+        .weather-tag { background: rgba(255,255,255,0.2); padding: 4px 10px; border-radius: 10px; font-size: 0.8rem; }
+        .recs-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+        .rec-item {
+          background: rgba(255,255,255,0.15);
+          padding: 1rem;
+          border-radius: 12px;
+          cursor: pointer;
+          transition: background 0.2s;
+        }
+        .rec-item:hover { background: rgba(255,255,255,0.25); }
+        .rec-name { font-weight: 700; display: block; }
+        .rec-meta { font-size: 0.8rem; opacity: 0.9; }
+
         .filters {
           background: var(--card-bg);
           padding: 2rem;
@@ -164,12 +218,7 @@ class RecipeFinder extends HTMLElement {
           background: var(--card-bg);
           color: var(--text-color);
         }
-        .chips-container {
-          display: flex;
-          flex-wrap: wrap;
-          gap: 8px;
-          margin-top: 5px;
-        }
+        .chips-container { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 5px; }
         .chip {
           padding: 6px 14px;
           background: #f1f2f6;
@@ -200,8 +249,7 @@ class RecipeFinder extends HTMLElement {
           gap: 0.5rem;
         }
         .shuffle-btn:hover { background: var(--accent-hover); transform: translateY(-2px); }
-        .shuffle-btn:active { transform: translateY(0); }
-
+        
         .recipe-display { min-height: 300px; display: flex; justify-content: center; align-items: center; }
         .recipe-card {
           background: var(--card-bg);
@@ -211,20 +259,15 @@ class RecipeFinder extends HTMLElement {
           width: 100%;
           animation: slideIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
-        @keyframes slideIn {
-          from { opacity: 0; transform: translateY(20px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
+        @keyframes slideIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
         .recipe-header {
-          display: flex;
-          justify-content: space-between;
-          align-items: flex-start;
           margin-bottom: 1.5rem;
           border-bottom: 2px dashed #eee;
           padding-bottom: 1rem;
         }
         .recipe-title { margin: 0; font-size: 1.8rem; }
-        .tags { display: flex; gap: 0.5rem; margin-top: 0.5rem; }
+        .recipe-source { font-style: italic; font-size: 0.9rem; opacity: 0.6; display: block; margin-top: 0.2rem; }
+        .tags { display: flex; gap: 0.5rem; margin-top: 0.8rem; }
         .tag { padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 700; color: white; }
         .tag-cat { background: var(--secondary-color); }
         .tag-time { background: #a29bfe; }
@@ -234,12 +277,7 @@ class RecipeFinder extends HTMLElement {
 
         h3 { color: var(--accent-color); margin: 1.5rem 0 0.5rem 0; }
         ul { margin: 0; padding-left: 1.2rem; line-height: 1.6; }
-        
-        .steps-container {
-          display: grid;
-          gap: 1.5rem;
-          margin-top: 1rem;
-        }
+        .steps-container { display: grid; gap: 1.5rem; margin-top: 1rem; }
         .step {
           display: grid;
           grid-template-columns: 120px 1fr;
@@ -248,40 +286,31 @@ class RecipeFinder extends HTMLElement {
           padding: 1.2rem;
           border-radius: 16px;
           border-left: 5px solid var(--accent-color);
-          transition: transform 0.2s;
         }
-        .step:hover { transform: scale(1.01); }
         [data-theme="dark"] .step { background: #3d4244; }
-        
-        .step-image {
-          width: 120px;
-          height: 100px;
-          object-fit: cover;
-          border-radius: 12px;
-          box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-        }
+        .step-image { width: 120px; height: 100px; object-fit: cover; border-radius: 12px; }
         .step-content { display: flex; flex-direction: column; gap: 0.4rem; }
-        .step-number {
-          font-weight: 800;
-          font-size: 0.9rem;
-          color: var(--accent-color);
-          text-transform: uppercase;
-          display: flex;
-          align-items: center;
-          gap: 0.5rem;
-        }
-        .step-time {
-          font-size: 0.75rem;
-          font-weight: 700;
-          color: #a29bfe;
-          background: rgba(162, 155, 254, 0.1);
-          padding: 2px 8px;
-          border-radius: 10px;
-        }
+        .step-number { font-weight: 800; font-size: 0.9rem; color: var(--accent-color); text-transform: uppercase; display: flex; align-items: center; gap: 0.5rem; }
+        .step-time { font-size: 0.75rem; font-weight: 700; color: #a29bfe; background: rgba(162, 155, 254, 0.1); padding: 2px 8px; border-radius: 10px; }
         .step-desc { line-height: 1.5; font-size: 0.95rem; margin: 0; opacity: 0.9; }
         .no-recipe { text-align: center; opacity: 0.5; font-style: italic; }
       </style>
       <div class="container">
+        <div class="recs-section">
+          <div class="recs-header">
+            <h2 class="recs-title">✨ Recommended for ${this.state.mealTime} in SG</h2>
+            <span class="weather-tag">☁️ ${this.state.weather} Choice</span>
+          </div>
+          <div class="recs-grid">
+            ${this.state.recommendations.map(r => `
+              <div class="rec-item" onclick="this.getRootNode().host.selectRecipe(${JSON.stringify(r).replace(/"/g, '&quot;')})">
+                <span class="rec-name">${r.name}</span>
+                <span class="rec-meta">${r.time}m • ${r.difficulty}</span>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+
         <div class="filters">
           <div class="filter-group">
             <label>Cuisine</label>
@@ -317,7 +346,7 @@ class RecipeFinder extends HTMLElement {
           </button>
         </div>
         <div class="recipe-display" id="display">
-          <div class="no-recipe">Click the button to find a random recipe!</div>
+          <div class="no-recipe">Click a recommendation or shuffle for a surprise!</div>
         </div>
       </div>
     `;
@@ -335,13 +364,12 @@ class RecipeFinder extends HTMLElement {
     display.innerHTML = `
       <div class="recipe-card">
         <div class="recipe-header">
-          <div>
-            <h2 class="recipe-title">${r.name}</h2>
-            <div class="tags">
-              <span class="tag tag-cat">${r.category}</span>
-              <span class="tag tag-diff ${r.difficulty}">${r.difficulty}</span>
-              <span class="tag tag-time">${r.time} mins</span>
-            </div>
+          <h2 class="recipe-title">${r.name}</h2>
+          <span class="recipe-source">${r.source}</span>
+          <div class="tags">
+            <span class="tag tag-cat">${r.category}</span>
+            <span class="tag tag-diff ${r.difficulty}">${r.difficulty}</span>
+            <span class="tag tag-time">${r.time} mins</span>
           </div>
         </div>
         <h3>🛒 Ingredients</h3>

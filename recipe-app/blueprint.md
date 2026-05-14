@@ -5,6 +5,8 @@
 A vibrant, interactive web application that helps users decide what to cook based on their available time, ingredients, and preferred cuisine.
 
 ## Features
+- **Daily Recommendations**: Dynamic suggestions based on Singapore's current time (Breakfast/Lunch/Dinner) and weather scenarios.
+- **Source Attribution**: Recipes include citations from top-reviewed sources (e.g., NYT Cooking, Gordon Ramsay) in italics.
 - **Smart Filtering**: Filter by Category (Western/Chinese), Difficulty (Easy/Medium/Hard), and Max Cooking Time.
 - **Ingredient Matching**: 
     - **Custom Ingredients**: Input specific items you have in your fridge.
