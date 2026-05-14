@@ -84,17 +84,14 @@ class RecipeFinder extends HTMLElement {
     if (hour < 11) mealTime = "Breakfast";
     else if (hour < 16) mealTime = "Lunch";
 
-    // Simulate weather - in a real app, this could call a weather API
     const weather = Math.random() > 0.5 ? "Rainy" : "Sunny";
     
     let filtered = recipes.filter(r => r.tags.includes(mealTime));
-    
-    // Add weather-based flair
     if (weather === "Rainy") {
       filtered = recipes.filter(r => r.category === "Chinese" || r.tags.includes("Warm"));
     }
 
-    this.state.recommendations = filtered.sort(() => 0.5 - Math.random()).slice(0, 2);
+    this.state.recommendations = (filtered.length > 0 ? filtered : recipes).sort(() => 0.5 - Math.random()).slice(0, 2);
     this.state.mealTime = mealTime;
     this.state.weather = weather;
   }
@@ -131,7 +128,7 @@ class RecipeFinder extends HTMLElement {
       let score = 0;
       if (userIngredients.length > 0) {
         userIngredients.forEach(userIng => {
-          if (r.ingredients.some(recipeIng => recipeIng.toLowerCase().includes(userIng))) {
+          if (r.ingredients.some(recipeIng => recipeIng.name.toLowerCase().includes(userIng))) {
             score++;
           }
         });
@@ -158,7 +155,6 @@ class RecipeFinder extends HTMLElement {
   selectRecipe(recipe) {
     this.state.currentRecipe = recipe;
     this.renderRecipe();
-    // Scroll to display
     this.shadowRoot.getElementById('display').scrollIntoView({ behavior: 'smooth' });
   }
 
@@ -276,7 +272,24 @@ class RecipeFinder extends HTMLElement {
         .tag-diff.Hard { background: var(--difficulty-hard); }
 
         h3 { color: var(--accent-color); margin: 1.5rem 0 0.5rem 0; }
-        ul { margin: 0; padding-left: 1.2rem; line-height: 1.6; }
+        .ing-list {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+          gap: 0.8rem;
+          margin-top: 1rem;
+        }
+        .ing-item {
+          display: flex;
+          justify-content: space-between;
+          background: #f8f9fa;
+          padding: 0.8rem 1.2rem;
+          border-radius: 10px;
+          font-size: 0.95rem;
+        }
+        [data-theme="dark"] .ing-item { background: #3d4244; }
+        .ing-name { font-weight: 600; }
+        .ing-amount { color: var(--accent-color); font-weight: 800; font-size: 0.85rem; }
+
         .steps-container { display: grid; gap: 1.5rem; margin-top: 1rem; }
         .step {
           display: grid;
@@ -372,10 +385,15 @@ class RecipeFinder extends HTMLElement {
             <span class="tag tag-time">${r.time} mins</span>
           </div>
         </div>
-        <h3>🛒 Ingredients</h3>
-        <ul>
-          ${r.ingredients.map(i => `<li>${i}</li>`).join('')}
-        </ul>
+        <h3>🛒 Ingredients & Amounts</h3>
+        <div class="ing-list">
+          ${r.ingredients.map(i => `
+            <div class="ing-item">
+              <span class="ing-name">${i.name}</span>
+              <span class="ing-amount">${i.amount}</span>
+            </div>
+          `).join('')}
+        </div>
         <h3>👨‍🍳 Step-by-Step Guide</h3>
         <div class="steps-container">
           ${r.steps.map((step, index) => `

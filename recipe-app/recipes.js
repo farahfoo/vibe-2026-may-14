@@ -7,7 +7,14 @@ export const recipes = [
     difficulty: "Medium",
     time: 30,
     tags: ["Lunch", "Dinner"],
-    ingredients: ["Ground Beef", "Burger Buns", "Lettuce", "Tomato", "Cheese", "Onion"],
+    ingredients: [
+      { name: "Ground Beef", amount: "500g" },
+      { name: "Burger Buns", amount: "2 large" },
+      { name: "Lettuce", amount: "2 leaves" },
+      { name: "Tomato", amount: "1 sliced" },
+      { name: "Cheddar Cheese", amount: "2 slices" },
+      { name: "Red Onion", amount: "1/4 sliced" }
+    ],
     steps: [
       {
         desc: "Shape the ground beef into 1-inch thick patties. Season both sides with salt and pepper.",
@@ -39,7 +46,14 @@ export const recipes = [
     difficulty: "Easy",
     time: 15,
     tags: ["Lunch", "Dinner", "Quick"],
-    ingredients: ["Pasta", "Tomato Sauce", "Garlic", "Basil", "Olive Oil", "Parmesan"],
+    ingredients: [
+      { name: "Pasta", amount: "200g" },
+      { name: "Tomato Sauce", amount: "1 cup" },
+      { name: "Garlic", amount: "2 cloves, minced" },
+      { name: "Fresh Basil", amount: "1 handful" },
+      { name: "Olive Oil", amount: "2 tbsp" },
+      { name: "Parmesan Cheese", amount: "Grated, to taste" }
+    ],
     steps: [
       {
         desc: "Boil a large pot of salted water and cook the pasta according to package directions.",
@@ -71,7 +85,14 @@ export const recipes = [
     difficulty: "Hard",
     time: 45,
     tags: ["Dinner"],
-    ingredients: ["Chicken", "Peanuts", "Dried Chilies", "Soy Sauce", "Ginger", "Scallions"],
+    ingredients: [
+      { name: "Chicken Thighs", amount: "300g, cubed" },
+      { name: "Peanuts", amount: "1/2 cup, roasted" },
+      { name: "Dried Chilies", amount: "6-8 pieces" },
+      { name: "Soy Sauce", amount: "2 tbsp" },
+      { name: "Ginger", amount: "1 tbsp, sliced" },
+      { name: "Scallions", amount: "2 stalks, chopped" }
+    ],
     steps: [
       {
         desc: "Cube the chicken and marinate with soy sauce, ginger, and a bit of cornstarch.",
@@ -103,7 +124,14 @@ export const recipes = [
     difficulty: "Easy",
     time: 10,
     tags: ["Breakfast", "Lunch", "Quick"],
-    ingredients: ["Rice", "Egg", "Soy Sauce", "Scallions", "Oil", "Peas"],
+    ingredients: [
+      { name: "Cooked Rice", amount: "2 cups, cold" },
+      { name: "Eggs", amount: "2 large" },
+      { name: "Soy Sauce", amount: "1 tbsp" },
+      { name: "Scallions", amount: "1 stalk, sliced" },
+      { name: "Vegetable Oil", amount: "2 tbsp" },
+      { name: "Frozen Peas", amount: "1/4 cup" }
+    ],
     steps: [
       {
         desc: "Whisk eggs and scramble them in a hot wok with oil. Remove and set aside.",
@@ -135,7 +163,14 @@ export const recipes = [
     difficulty: "Medium",
     time: 25,
     tags: ["Lunch", "Dinner"],
-    ingredients: ["Beef", "Broccoli", "Oyster Sauce", "Garlic", "Ginger", "Cornstarch"],
+    ingredients: [
+      { name: "Beef Flank Steak", amount: "250g, sliced" },
+      { name: "Broccoli", amount: "1 head, florets" },
+      { name: "Oyster Sauce", amount: "2 tbsp" },
+      { name: "Garlic", amount: "3 cloves, minced" },
+      { name: "Ginger", amount: "1 tsp, grated" },
+      { name: "Cornstarch", amount: "1 tbsp" }
+    ],
     steps: [
       {
         desc: "Slice beef thinly against the grain and toss with cornstarch and a splash of soy sauce.",
@@ -167,7 +202,13 @@ export const recipes = [
     difficulty: "Easy",
     time: 10,
     tags: ["Lunch", "Light"],
-    ingredients: ["Romaine Lettuce", "Croutons", "Parmesan", "Caesar Dressing", "Chicken Breast"],
+    ingredients: [
+      { name: "Romaine Lettuce", amount: "1 large head" },
+      { name: "Croutons", amount: "1/2 cup" },
+      { name: "Parmesan Cheese", amount: "1/4 cup, shaved" },
+      { name: "Caesar Dressing", amount: "3 tbsp" },
+      { name: "Chicken Breast", amount: "1 piece, grilled" }
+    ],
     steps: [
       {
         desc: "Grill chicken breast until cooked through, then slice into strips.",
@@ -194,7 +235,14 @@ export const recipes = [
     difficulty: "Medium",
     time: 20,
     tags: ["Dinner", "Light"],
-    ingredients: ["White Fish", "Soy Sauce", "Ginger", "Scallions", "Cilantro", "Sesame Oil"],
+    ingredients: [
+      { name: "White Fish Fillet", amount: "1 piece (200g)" },
+      { name: "Soy Sauce", amount: "2 tbsp" },
+      { name: "Fresh Ginger", amount: "2-inch piece, julienned" },
+      { name: "Scallions", amount: "2 stalks, shredded" },
+      { name: "Cilantro", amount: "Fresh, for garnish" },
+      { name: "Sesame Oil", amount: "1 tbsp" }
+    ],
     steps: [
       {
         desc: "Prepare the fish and place ginger slices on top. Setup your steamer.",
@@ -221,7 +269,14 @@ export const recipes = [
     difficulty: "Medium",
     time: 20,
     tags: ["Dinner"],
-    ingredients: ["Steak", "Salt", "Pepper", "Garlic", "Rosemary", "Butter"],
+    ingredients: [
+      { name: "Ribeye or Striploin Steak", amount: "250g" },
+      { name: "Kosher Salt", amount: "To taste" },
+      { name: "Black Pepper", amount: "To taste" },
+      { name: "Garlic", amount: "2 cloves, smashed" },
+      { name: "Fresh Rosemary", amount: "1 sprig" },
+      { name: "Unsalted Butter", amount: "1 tbsp" }
+    ],
     steps: [
       {
         desc: "Season the steak generously with salt and pepper on both sides.",
