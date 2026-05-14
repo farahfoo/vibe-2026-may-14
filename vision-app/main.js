@@ -101,7 +101,7 @@ class VisionClassifier extends HTMLElement {
   constructor() {
     super();
     this.attachShadow({ mode: 'open' });
-    this.modelURL = "./my_model/";
+    this.modelURL = "https://teachablemachine.withgoogle.com/models/Ywn-ZzwDh/";
     this.model = null;
     this.webcam = null;
     this.labelContainer = null;
@@ -109,6 +109,14 @@ class VisionClassifier extends HTMLElement {
 
   connectedCallback() {
     this.render();
+    // Add a script tag for the Teachable Machine library
+    const script = document.createElement('script');
+    script.src = 'https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest/dist/teachablemachine-image.min.js';
+    script.onload = () => {
+      // The library is loaded, you can now safely call the init function
+    };
+    this.shadowRoot.appendChild(script);
+
   }
 
   async init() {
