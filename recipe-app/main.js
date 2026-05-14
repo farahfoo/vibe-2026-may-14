@@ -61,11 +61,13 @@ class RecipeFinder extends HTMLElement {
   constructor() {
     super();
     this.attachShadow({ mode: 'open' });
+    this.commonIngredients = ["Egg", "Garlic", "Onion", "Rice", "Pasta", "Beef", "Chicken", "Tomato", "Potato", "Cheese"];
     this.state = {
       category: 'All',
       difficulty: 'All',
       maxTime: 60,
-      ingredients: [],
+      typedIngredients: [],
+      selectedCommon: new Set(),
       currentRecipe: null
     };
   }
@@ -78,19 +80,34 @@ class RecipeFinder extends HTMLElement {
     this.state[key] = value;
   }
 
-  updateIngredients(value) {
-    this.state.ingredients = value.split(',').map(i => i.trim().toLowerCase()).filter(i => i);
+  updateTypedIngredients(value) {
+    this.state.typedIngredients = value.split(',').map(i => i.trim().toLowerCase()).filter(i => i);
+  }
+
+  toggleCommonIngredient(ing) {
+    const lowerIng = ing.toLowerCase();
+    if (this.state.selectedCommon.has(lowerIng)) {
+      this.state.selectedCommon.delete(lowerIng);
+    } else {
+      this.state.selectedCommon.add(lowerIng);
+    }
+    this.renderCommonChips();
+  }
+
+  get allIngredients() {
+    return [...new Set([...this.state.typedIngredients, ...this.state.selectedCommon])];
   }
 
   findRecipes() {
+    const userIngredients = this.allIngredients;
     const filtered = recipes.filter(r => {
       const matchCat = this.state.category === 'All' || r.category === this.state.category;
       const matchDiff = this.state.difficulty === 'All' || r.difficulty === this.state.difficulty;
       const matchTime = r.time <= this.state.maxTime;
       
       let score = 0;
-      if (this.state.ingredients.length > 0) {
-        this.state.ingredients.forEach(userIng => {
+      if (userIngredients.length > 0) {
+        userIngredients.forEach(userIng => {
           if (r.ingredients.some(recipeIng => recipeIng.toLowerCase().includes(userIng))) {
             score++;
           }
@@ -106,8 +123,7 @@ class RecipeFinder extends HTMLElement {
     if (filtered.length === 0) {
       this.state.currentRecipe = null;
     } else {
-      // Prioritize by match score if ingredients are provided
-      const pool = this.state.ingredients.length > 0 
+      const pool = userIngredients.length > 0 
         ? filtered.sort((a, b) => b.matchScore - a.matchScore).slice(0, 3)
         : filtered;
       
@@ -116,13 +132,18 @@ class RecipeFinder extends HTMLElement {
     this.renderRecipe();
   }
 
+  renderCommonChips() {
+    const container = this.shadowRoot.getElementById('common-chips');
+    container.innerHTML = this.commonIngredients.map(ing => {
+      const active = this.state.selectedCommon.has(ing.toLowerCase()) ? 'active' : '';
+      return `<span class="chip ${active}" onclick="this.getRootNode().host.toggleCommonIngredient('${ing}')">${ing}</span>`;
+    }).join('');
+  }
+
   render() {
     this.shadowRoot.innerHTML = `
       <style>
-        .container {
-          display: grid;
-          gap: 2rem;
-        }
+        .container { display: grid; gap: 2rem; }
         .filters {
           background: var(--card-bg);
           padding: 2rem;
@@ -133,6 +154,7 @@ class RecipeFinder extends HTMLElement {
           gap: 1.5rem;
         }
         .filter-group { display: flex; flex-direction: column; gap: 0.5rem; }
+        .filter-group.full-width { grid-column: 1 / -1; }
         label { font-weight: 700; font-size: 0.9rem; color: var(--accent-color); text-transform: uppercase; }
         select, input {
           padding: 0.8rem;
@@ -142,6 +164,25 @@ class RecipeFinder extends HTMLElement {
           background: var(--card-bg);
           color: var(--text-color);
         }
+        .chips-container {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 8px;
+          margin-top: 5px;
+        }
+        .chip {
+          padding: 6px 14px;
+          background: #f1f2f6;
+          color: #2d3436;
+          border-radius: 20px;
+          font-size: 0.85rem;
+          cursor: pointer;
+          transition: all 0.2s;
+          border: 2px solid transparent;
+        }
+        .chip:hover { transform: translateY(-2px); border-color: var(--accent-color); }
+        .chip.active { background: var(--accent-color); color: white; border-color: var(--accent-color); font-weight: 700; }
+
         .shuffle-btn {
           grid-column: 1 / -1;
           background: var(--accent-color);
@@ -161,12 +202,7 @@ class RecipeFinder extends HTMLElement {
         .shuffle-btn:hover { background: var(--accent-hover); transform: translateY(-2px); }
         .shuffle-btn:active { transform: translateY(0); }
 
-        .recipe-display {
-          min-height: 300px;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-        }
+        .recipe-display { min-height: 300px; display: flex; justify-content: center; align-items: center; }
         .recipe-card {
           background: var(--card-bg);
           padding: 2.5rem;
@@ -189,13 +225,7 @@ class RecipeFinder extends HTMLElement {
         }
         .recipe-title { margin: 0; font-size: 1.8rem; }
         .tags { display: flex; gap: 0.5rem; margin-top: 0.5rem; }
-        .tag {
-          padding: 4px 12px;
-          border-radius: 20px;
-          font-size: 0.8rem;
-          font-weight: 700;
-          color: white;
-        }
+        .tag { padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 700; color: white; }
         .tag-cat { background: var(--secondary-color); }
         .tag-time { background: #a29bfe; }
         .tag-diff.Easy { background: var(--difficulty-easy); }
@@ -231,8 +261,12 @@ class RecipeFinder extends HTMLElement {
             <input type="number" value="60" min="5" step="5" onchange="this.getRootNode().host.updateFilter('maxTime', parseInt(this.value))">
           </div>
           <div class="filter-group">
-            <label>Ingredients I Have</label>
-            <input type="text" placeholder="e.g. egg, beef, pasta" oninput="this.getRootNode().host.updateIngredients(this.value)">
+            <label>Custom Ingredients</label>
+            <input type="text" placeholder="e.g. lemon, basil" oninput="this.getRootNode().host.updateTypedIngredients(this.value)">
+          </div>
+          <div class="filter-group full-width">
+            <label>Common Pantry Items</label>
+            <div class="chips-container" id="common-chips"></div>
           </div>
           <button class="shuffle-btn" onclick="this.getRootNode().host.findRecipes()">
             🔀 Find Random Recipe
@@ -243,6 +277,7 @@ class RecipeFinder extends HTMLElement {
         </div>
       </div>
     `;
+    this.renderCommonChips();
   }
 
   renderRecipe() {

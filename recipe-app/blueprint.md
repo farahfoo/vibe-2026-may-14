@@ -6,7 +6,9 @@ A vibrant, interactive web application that helps users decide what to cook base
 
 ## Features
 - **Smart Filtering**: Filter by Category (Western/Chinese), Difficulty (Easy/Medium/Hard), and Max Cooking Time.
-- **Ingredient Matching**: Input ingredients you have to prioritize matching recipes.
+- **Ingredient Matching**: 
+    - **Custom Ingredients**: Input specific items you have in your fridge.
+    - **Common Pantry Items**: Interactive chips for popular items (Egg, Garlic, Rice, etc.) for one-click selection.
 - **Randomize/Shuffle**: Quickly find a random recipe that fits your current constraints.
 - **Responsive Design**: Mobile-friendly layout with modern typography and animations.
 - **Day/Night Theme**: Persistent theme switching with a sleek floating toggle.
