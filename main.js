@@ -192,6 +192,7 @@ class TotoNumberGenerator extends HTMLElement {
     shadow.appendChild(style);
     shadow.appendChild(wrapper);
     wrapper.appendChild(title);
+    wrapper.appendChild(disclaimer);
     wrapper.appendChild(numbersContainer);
     wrapper.appendChild(extraNumberContainer);
     wrapper.appendChild(button);
@@ -259,3 +260,10 @@ class TotoNumberGenerator extends HTMLElement {
 }
 
 customElements.define('toto-number-generator', TotoNumberGenerator);
+nnerHTML = '';
+    container.appendChild(this.createNumberElement(newNumber));
+  }
+}
+
+customElements.define('toto-number-generator', TotoNumberGenerator);
+-generator', TotoNumberGenerator);

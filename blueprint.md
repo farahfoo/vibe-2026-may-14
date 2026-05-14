@@ -19,7 +19,9 @@ This project is a modern web application featuring a Toto Number Generator with 
     - Automatically includes at least **3 "Hot" or "High"** numbers in every draw.
     - **"Hot" Numbers**: Frequently appearing numbers from the past 3 months (e.g., 1, 3, 4, 6, 7, 8, 48).
     - **"High" Numbers**: Numbers in the top range (40-49).
-- **Visual Cues**: Labeled badges for "Hot" and "High" numbers for quick identification.
+- **Visual Cues**: 
+    - Labeled badges for "Hot" and "High" numbers for quick identification.
+    - **Disclaimer**: A subscript note explaining that number popularity is derived from the last 3 months of Group 1 and 2 winning results.
 - **Design**: Centered card layout with a modern, responsive design.
 - **Interactivity**: Smooth animations and hover effects on generated numbers and the button.
 - **Theme Support**: Uses global CSS variables to automatically adapt to light and dark modes.
