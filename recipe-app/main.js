@@ -196,7 +196,6 @@ class RecipeFinder extends HTMLElement {
       return matchCat && matchDiff && matchTime;
     });
 
-    // Remove the last shown recipe to avoid immediate repeats
     if (filtered.length > 1) {
       filtered = filtered.filter(r => r.id !== this.lastRecipeId);
     }
@@ -204,7 +203,6 @@ class RecipeFinder extends HTMLElement {
     if (filtered.length === 0) {
       this.state.currentRecipe = null;
     } else {
-      // Prioritize match score if searching by ingredient
       const pool = userIngredients.length > 0 
         ? filtered.sort((a, b) => b.matchScore - a.matchScore).slice(0, 3)
         : filtered;
@@ -336,15 +334,6 @@ class RecipeFinder extends HTMLElement {
         .tag-diff.Medium { background: var(--difficulty-medium); }
         .tag-diff.Hard { background: var(--difficulty-hard); }
 
-        .hero-container {
-          margin: 1.5rem 0;
-          border-radius: 20px;
-          overflow: hidden;
-          height: 250px;
-          box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-        }
-        .hero-img { width: 100%; height: 100%; object-fit: cover; }
-
         h3 { color: var(--accent-color); margin: 1.5rem 0 0.5rem 0; }
         .ing-list {
           display: grid;
@@ -364,22 +353,18 @@ class RecipeFinder extends HTMLElement {
         .ing-name { font-weight: 600; }
         .ing-amount { color: var(--accent-color); font-weight: 800; font-size: 0.85rem; }
 
-        .steps-container { display: grid; gap: 1.5rem; margin-top: 1rem; }
+        .steps-container { display: grid; gap: 1rem; margin-top: 1rem; }
         .step {
-          display: grid;
-          grid-template-columns: 120px 1fr;
-          gap: 1.5rem;
           background: #f8f9fa;
           padding: 1.2rem;
           border-radius: 16px;
           border-left: 5px solid var(--accent-color);
         }
         [data-theme="dark"] .step { background: #3d4244; }
-        .step-image { width: 120px; height: 100px; object-fit: cover; border-radius: 12px; }
         .step-content { display: flex; flex-direction: column; gap: 0.4rem; }
         .step-number { font-weight: 800; font-size: 0.9rem; color: var(--accent-color); text-transform: uppercase; display: flex; align-items: center; gap: 0.5rem; }
         .step-time { font-size: 0.75rem; font-weight: 700; color: #a29bfe; background: rgba(162, 155, 254, 0.1); padding: 2px 8px; border-radius: 10px; }
-        .step-desc { line-height: 1.5; font-size: 0.95rem; margin: 0; opacity: 0.9; }
+        .step-desc { line-height: 1.5; font-size: 1rem; margin: 0; opacity: 0.9; }
         .no-recipe { text-align: center; opacity: 0.5; font-style: italic; }
       </style>
       <div class="container">
@@ -478,10 +463,6 @@ class RecipeFinder extends HTMLElement {
           </div>
         </div>
         
-        <div class="hero-container">
-          <img src="${r.heroImage}" alt="${r.name}" class="hero-img">
-        </div>
-
         <h3>🛒 Ingredients & Amounts</h3>
         <div class="ing-list">
           ${r.ingredients.map(i => `
@@ -495,7 +476,6 @@ class RecipeFinder extends HTMLElement {
         <div class="steps-container">
           ${r.steps.map((step, index) => `
             <div class="step">
-              <img src="${step.image}" alt="Step ${index + 1}" class="step-image">
               <div class="step-content">
                 <span class="step-number">Step ${index + 1} <span class="step-time">${step.time}</span></span>
                 <p class="step-desc">${step.desc}</p>
