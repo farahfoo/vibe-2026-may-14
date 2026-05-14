@@ -116,7 +116,7 @@ A critical function of the AI is to continuously monitor for and automatically r
 1. Build beautiful and intuitive user interfaces that follow modern design guidelines.
 2. Ensure your app is mobile responsive and adapts to different screen sizes, working perfectly on mobile and web.
 3. Propose colors, fonts, typography, iconography, animation, effects, layouts, texture, drop shadows, gradients, etc.
-4. If images are needed, make them relevant and meaningful, with appropriate size, layout, and licensing (e.g., freely available). If real images are not available, provide placeholder images.
+4. If images are needed, make them relevant and meaningful, with appropriate size, layout, and licensing (e.g., freely available). If real images are not available, provide placeholder images. 
 5. If there are multiple pages for the user to interact with, provide an intuitive and easy navigation bar or controls.
 
 **Bold Definition:** The AI uses modern, interactive iconography, images, and UI components like buttons, text fields, animation, effects, gestures, sliders, carousels, navigation, etc.

@@ -128,7 +128,8 @@ class RecipeFinder extends HTMLElement {
       currentRecipe: null,
       recommendations: []
     };
-    this.lastRecipeId = null;
+    this.history = [];
+    this.historyLimit = 5;
   }
 
   connectedCallback() {
@@ -196,8 +197,12 @@ class RecipeFinder extends HTMLElement {
       return matchCat && matchDiff && matchTime;
     });
 
-    if (filtered.length > 1) {
-      filtered = filtered.filter(r => r.id !== this.lastRecipeId);
+    // Remove recently shown recipes to avoid repeats
+    if (filtered.length > this.history.length) {
+      filtered = filtered.filter(r => !this.history.includes(r.id));
+    } else if (filtered.length > 1) {
+      // If we have very few matches, just avoid the absolute last one
+      filtered = filtered.filter(r => r.id !== this.history[this.history.length - 1]);
     }
 
     if (filtered.length === 0) {
@@ -208,15 +213,22 @@ class RecipeFinder extends HTMLElement {
         : filtered;
       
       const newRecipe = pool[Math.floor(Math.random() * pool.length)];
+      this.addToHistory(newRecipe.id);
       this.state.currentRecipe = newRecipe;
-      this.lastRecipeId = newRecipe.id;
     }
     this.renderRecipe();
   }
 
+  addToHistory(id) {
+    this.history.push(id);
+    if (this.history.length > this.historyLimit) {
+      this.history.shift();
+    }
+  }
+
   selectRecipe(recipe) {
     this.state.currentRecipe = recipe;
-    this.lastRecipeId = recipe.id;
+    this.addToHistory(recipe.id);
     this.renderRecipe();
     this.shadowRoot.getElementById('display').scrollIntoView({ behavior: 'smooth' });
   }
@@ -352,6 +364,7 @@ class RecipeFinder extends HTMLElement {
         [data-theme="dark"] .ing-item { background: #3d4244; }
         .ing-name { font-weight: 600; }
         .ing-amount { color: var(--accent-color); font-weight: 800; font-size: 0.85rem; }
+        .ing-item.optional { border: 1px dashed var(--accent-color); background: rgba(108, 92, 231, 0.05); }
 
         .steps-container { display: grid; gap: 1rem; margin-top: 1rem; }
         .step {
@@ -362,8 +375,12 @@ class RecipeFinder extends HTMLElement {
         }
         [data-theme="dark"] .step { background: #3d4244; }
         .step-content { display: flex; flex-direction: column; gap: 0.4rem; }
-        .step-number { font-weight: 800; font-size: 0.9rem; color: var(--accent-color); text-transform: uppercase; display: flex; align-items: center; gap: 0.5rem; }
+        .step-number { font-weight: 800; font-size: 0.9rem; color: var(--accent-color); text-transform: uppercase; display: flex; align-items: center; flex-wrap: wrap; gap: 0.5rem; }
         .step-time { font-size: 0.75rem; font-weight: 700; color: #a29bfe; background: rgba(162, 155, 254, 0.1); padding: 2px 8px; border-radius: 10px; }
+        .step-heat { font-size: 0.75rem; font-weight: 700; color: white; padding: 2px 8px; border-radius: 10px; }
+        .step-heat[data-heat="High"] { background: #ff4757; }
+        .step-heat[data-heat="Medium"] { background: #ffa502; }
+        .step-heat[data-heat="Low"] { background: #2ed573; }
         .step-desc { line-height: 1.5; font-size: 1rem; margin: 0; opacity: 0.9; }
         .no-recipe { text-align: center; opacity: 0.5; font-style: italic; }
       </style>
@@ -472,12 +489,36 @@ class RecipeFinder extends HTMLElement {
             </div>
           `).join('')}
         </div>
+
+        ${r.optionalIngredients && r.optionalIngredients.length > 0 ? `
+          <h3>✨ Optional Recommendations</h3>
+          <div class="ing-list">
+            ${r.optionalIngredients.map(i => `
+              <div class="ing-item optional">
+                <span class="ing-name">${i.name} (Optional)</span>
+                <span class="ing-amount">${i.amount}</span>
+              </div>
+            `).join('')}
+          </div>
+        ` : ''}
+
+        ${r.equipment && r.equipment.length > 0 ? `
+          <h3>🛠️ Equipment Needed</h3>
+          <div class="chips-container" style="margin-top: 10px">
+            ${r.equipment.map(e => `<span class="chip active" style="cursor: default">${e}</span>`).join('')}
+          </div>
+        ` : ''}
+
         <h3>👨‍🍳 Step-by-Step Guide</h3>
         <div class="steps-container">
           ${r.steps.map((step, index) => `
             <div class="step">
               <div class="step-content">
-                <span class="step-number">Step ${index + 1} <span class="step-time">${step.time}</span></span>
+                <div class="step-number">
+                  Step ${index + 1} 
+                  <span class="step-time">${step.time}</span>
+                  ${step.heat ? `<span class="step-heat" data-heat="${step.heat}">${step.heat} Heat</span>` : ''}
+                </div>
                 <p class="step-desc">${step.desc}</p>
               </div>
             </div>
