@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Workspace Apps</title>
+  <style>
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background-color: #f8f9fa;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      color: #2d3436;
+    }
+    .portal {
+      text-align: center;
+      background: white;
+      padding: 3rem;
+      border-radius: 24px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.05);
+      max-width: 500px;
+      width: 90%;
+    }
+    h1 { color: #ff6b6b; margin-bottom: 0.5rem; }
+    p { margin-bottom: 2rem; opacity: 0.7; }
+    .links {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .app-link {
+      padding: 1.2rem;
+      text-decoration: none;
+      color: white;
+      border-radius: 12px;
+      font-weight: 700;
+      transition: transform 0.2s, opacity 0.2s;
+    }
+    .app-link:hover { transform: translateY(-3px); opacity: 0.9; }
+    .recipe-link { background-color: #ff6b6b; }
+    .toto-link { background-color: #4ecdc4; }
+  </style>
+</head>
+<body>
+  <div class="portal">
+    <h1>🚀 Welcome!</h1>
+    <p>Select an application to preview:</p>
+    <div class="links">
+      <a href="/recipe-app/" class="app-link recipe-link">🍳 Smart Recipe Finder</a>
+      <a href="/toto-app/" class="app-link toto-link">🔢 Toto Number Generator</a>
+    </div>
+  </div>
+</body>
+</html>
