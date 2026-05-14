@@ -81,6 +81,10 @@ class TotoNumberGenerator extends HTMLElement {
     const title = document.createElement('h2');
     title.textContent = 'Toto Number Generator';
 
+    const disclaimer = document.createElement('p');
+    disclaimer.setAttribute('class', 'disclaimer');
+    disclaimer.textContent = '* Popularity of numbers is based on Group 1 and 2 winning results from the past 3 months.';
+
     const numbersContainer = document.createElement('div');
     numbersContainer.setAttribute('class', 'numbers');
 
@@ -112,6 +116,15 @@ class TotoNumberGenerator extends HTMLElement {
         margin-top: 0;
         color: var(--text-color);
         font-size: 1.5rem;
+        margin-bottom: 0.5rem;
+      }
+      .disclaimer {
+        font-size: 11px;
+        color: var(--text-color);
+        opacity: 0.6;
+        margin: 0 0 20px 0;
+        font-style: italic;
+        line-height: 1.4;
       }
       .numbers, .extra-number {
         display: flex;
@@ -260,10 +273,3 @@ class TotoNumberGenerator extends HTMLElement {
 }
 
 customElements.define('toto-number-generator', TotoNumberGenerator);
-nnerHTML = '';
-    container.appendChild(this.createNumberElement(newNumber));
-  }
-}
-
-customElements.define('toto-number-generator', TotoNumberGenerator);
--generator', TotoNumberGenerator);
