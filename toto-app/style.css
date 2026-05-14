@@ -38,3 +38,8 @@ body {
   gap: 2rem;
   margin-top: 5rem;
 }
+
+.disqus-container {
+  max-width: 800px;
+  margin: 2rem auto;
+}
