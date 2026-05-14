@@ -109,62 +109,58 @@ class VisionClassifier extends HTMLElement {
 
   connectedCallback() {
     this.render();
-    // Add a script tag for the Teachable Machine library
     const script = document.createElement('script');
     script.src = 'https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest/dist/teachablemachine-image.min.js';
     script.onload = () => {
       // The library is loaded, you can now safely call the init function
     };
     this.shadowRoot.appendChild(script);
-
   }
 
-  async init() {
+  async init(useWebcam = true) {
     const btn = this.shadowRoot.getElementById('start-btn');
-    btn.disabled = true;
-    btn.textContent = "Loading Model...";
+    btn.style.display = 'none';
 
-    try {
-      const modelURL = this.modelURL + "model.json";
-      const metadataURL = this.modelURL + "metadata.json";
+    const modelURL = this.modelURL + "model.json";
+    const metadataURL = this.modelURL + "metadata.json";
 
-      this.model = await window.tmImage.load(modelURL, metadataURL);
-      const maxPredictions = this.model.getTotalClasses();
+    this.model = await window.tmImage.load(modelURL, metadataURL);
+    const maxPredictions = this.model.getTotalClasses();
 
-      const flip = true;
-      this.webcam = new window.tmImage.Webcam(400, 400, flip);
-      await this.webcam.setup();
-      await this.webcam.play();
-      
-      this.shadowRoot.getElementById('webcam-placeholder').style.display = 'none';
-      this.shadowRoot.getElementById('webcam-container').appendChild(this.webcam.canvas);
-      
-      this.labelContainer = this.shadowRoot.getElementById('label-container');
-      for (let i = 0; i < maxPredictions; i++) {
+    this.labelContainer = this.shadowRoot.getElementById('label-container');
+    this.labelContainer.innerHTML = ''; // Clear previous predictions
+    for (let i = 0; i < maxPredictions; i++) {
         const bar = document.createElement('div');
         bar.className = 'prediction-bar';
         bar.innerHTML = \`<span class="label"></span><div class="progress-bg"><div class="progress-fill"></div></div><span class="value"></span>\`;
         this.labelContainer.appendChild(bar);
-      }
+    }
 
-      window.requestAnimationFrame(() => this.loop());
-      btn.style.display = 'none';
-    } catch (err) {
-      console.error(err);
-      alert("Error loading model. Make sure model.json, metadata.json and weights.bin are in the vision-app/my_model/ folder.");
-      btn.disabled = false;
-      btn.textContent = "Start AI Vision";
+    if (useWebcam) {
+        const flip = true;
+        this.webcam = new window.tmImage.Webcam(400, 400, flip);
+        await this.webcam.setup();
+        await this.webcam.play();
+        
+        this.shadowRoot.getElementById('webcam-placeholder').style.display = 'none';
+        const wcContainer = this.shadowRoot.getElementById('webcam-container');
+        wcContainer.innerHTML = ''; // Clear placeholder
+        wcContainer.appendChild(this.webcam.canvas);
+
+        window.requestAnimationFrame(() => this.loop());
     }
   }
 
   async loop() {
-    this.webcam.update();
-    await this.predict();
-    window.requestAnimationFrame(() => this.loop());
+    if (this.webcam) {
+      this.webcam.update();
+      await this.predict(this.webcam.canvas);
+      window.requestAnimationFrame(() => this.loop());
+    }
   }
 
-  async predict() {
-    const prediction = await this.model.predict(this.webcam.canvas);
+  async predict(imageElement) {
+    const prediction = await this.model.predict(imageElement);
     for (let i = 0; i < prediction.length; i++) {
       const bar = this.labelContainer.childNodes[i];
       const prob = (prediction[i].probability * 100).toFixed(0);
@@ -174,64 +170,37 @@ class VisionClassifier extends HTMLElement {
     }
   }
 
+  async handleImageUpload(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    if (!this.model) {
+        await this.init(false); // Load model without webcam
+    }
+
+    const image = new Image(400, 400);
+    image.src = URL.createObjectURL(file);
+    image.onload = async () => {
+      const wcContainer = this.shadowRoot.getElementById('webcam-container');
+      wcContainer.innerHTML = ''; // Clear webcam/placeholder
+      wcContainer.appendChild(image);
+      await this.predict(image);
+    }
+  }
+
   render() {
     this.shadowRoot.innerHTML = \`
       <style>
-        .card {
-          background: var(--card-bg);
-          padding: 2rem;
-          border-radius: 24px;
-          box-shadow: var(--card-shadow);
-          text-align: center;
-        }
-        #webcam-container {
-          margin: 1.5rem auto;
-          border-radius: 16px;
-          overflow: hidden;
-          width: 400px;
-          height: 400px;
-          background: #000;
-          box-shadow: 0 8px 24px rgba(0,0,0,0.1);
-        }
-        canvas { width: 100%; height: 100%; object-fit: cover; }
-        #webcam-placeholder {
-          height: 100%;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          color: #666;
-          flex-direction: column;
-          gap: 1rem;
-        }
-        .start-btn {
-          background: var(--accent-color);
-          color: white;
-          border: none;
-          padding: 1.2rem 2.5rem;
-          border-radius: 12px;
-          font-weight: 700;
-          font-size: 1.1rem;
-          cursor: pointer;
-          transition: all 0.2s;
-        }
-        .start-btn:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 8px 16px rgba(108, 92, 231, 0.4); }
-        .start-btn:disabled { opacity: 0.7; cursor: wait; }
-
-        #label-container {
-          margin-top: 2rem;
-          display: grid;
-          gap: 0.8rem;
-          max-width: 500px;
-          margin-left: auto;
-          margin-right: auto;
-        }
-        .prediction-bar {
-          display: grid;
-          grid-template-columns: 100px 1fr 50px;
-          align-items: center;
-          gap: 1rem;
-          text-align: left;
-        }
+        .card { background: var(--card-bg); padding: 2rem; border-radius: 24px; box-shadow: var(--card-shadow); text-align: center; }
+        #webcam-container { margin: 1.5rem auto; border-radius: 16px; overflow: hidden; width: 400px; height: 400px; background: #000; box-shadow: 0 8px 24px rgba(0,0,0,0.1); }
+        canvas, img { width: 100%; height: 100%; object-fit: cover; }
+        #webcam-placeholder { height: 100%; display: flex; align-items: center; justify-content: center; color: #666; flex-direction: column; gap: 1rem; }
+        .button-container { display: flex; justify-content: center; gap: 1rem; margin-top: 1rem; }
+        .action-btn { background: var(--accent-color); color: white; border: none; padding: 1rem 2rem; border-radius: 12px; font-weight: 700; font-size: 1rem; cursor: pointer; transition: all 0.2s; }
+        .action-btn:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 8px 16px rgba(108, 92, 231, 0.4); }
+        .action-btn:disabled { opacity: 0.7; cursor: wait; }
+        #label-container { margin-top: 2rem; display: grid; gap: 0.8rem; max-width: 500px; margin-left: auto; margin-right: auto; }
+        .prediction-bar { display: grid; grid-template-columns: 100px 1fr 50px; align-items: center; gap: 1rem; text-align: left; }
         .label { font-weight: 700; font-size: 0.9rem; }
         .progress-bg { background: #eee; height: 10px; border-radius: 5px; overflow: hidden; }
         .progress-fill { background: var(--accent-color); height: 100%; width: 0%; transition: width 0.1s; }
@@ -241,11 +210,15 @@ class VisionClassifier extends HTMLElement {
       <div class="card">
         <div id="webcam-container">
           <div id="webcam-placeholder">
-            <span>📷 Camera Preview</span>
-            <p style="font-size: 0.8rem; opacity: 0.6">Click start to activate AI</p>
+            <span>📷</span>
+            <p style="font-size: 0.8rem; opacity: 0.6">Start with your webcam or upload a picture</p>
           </div>
         </div>
-        <button class="start-btn" id="start-btn" onclick="this.getRootNode().host.init()">Start AI Vision</button>
+        <div class="button-container">
+          <button class="action-btn" id="start-btn" onclick="this.getRootNode().host.init(true)">Use Webcam</button>
+          <input type="file" id="image-upload" accept="image/*" style="display: none;" onchange="this.getRootNode().host.handleImageUpload(event)">
+          <button class="action-btn" onclick="this.getRootNode().host.shadowRoot.getElementById('image-upload').click()">Upload Picture</button>
+        </div>
         <div id="label-container"></div>
       </div>
     \`;
