@@ -234,7 +234,51 @@ class RecipeFinder extends HTMLElement {
 
         h3 { color: var(--accent-color); margin: 1.5rem 0 0.5rem 0; }
         ul { margin: 0; padding-left: 1.2rem; line-height: 1.6; }
-        .instructions { line-height: 1.6; opacity: 0.9; }
+        
+        .steps-container {
+          display: grid;
+          gap: 1.5rem;
+          margin-top: 1rem;
+        }
+        .step {
+          display: grid;
+          grid-template-columns: 120px 1fr;
+          gap: 1.5rem;
+          background: #f8f9fa;
+          padding: 1.2rem;
+          border-radius: 16px;
+          border-left: 5px solid var(--accent-color);
+          transition: transform 0.2s;
+        }
+        .step:hover { transform: scale(1.01); }
+        [data-theme="dark"] .step { background: #3d4244; }
+        
+        .step-image {
+          width: 120px;
+          height: 100px;
+          object-fit: cover;
+          border-radius: 12px;
+          box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        .step-content { display: flex; flex-direction: column; gap: 0.4rem; }
+        .step-number {
+          font-weight: 800;
+          font-size: 0.9rem;
+          color: var(--accent-color);
+          text-transform: uppercase;
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+        }
+        .step-time {
+          font-size: 0.75rem;
+          font-weight: 700;
+          color: #a29bfe;
+          background: rgba(162, 155, 254, 0.1);
+          padding: 2px 8px;
+          border-radius: 10px;
+        }
+        .step-desc { line-height: 1.5; font-size: 0.95rem; margin: 0; opacity: 0.9; }
         .no-recipe { text-align: center; opacity: 0.5; font-style: italic; }
       </style>
       <div class="container">
@@ -304,8 +348,18 @@ class RecipeFinder extends HTMLElement {
         <ul>
           ${r.ingredients.map(i => `<li>${i}</li>`).join('')}
         </ul>
-        <h3>👨‍🍳 Instructions</h3>
-        <p class="instructions">${r.instructions}</p>
+        <h3>👨‍🍳 Step-by-Step Guide</h3>
+        <div class="steps-container">
+          ${r.steps.map((step, index) => `
+            <div class="step">
+              <img src="${step.image}" alt="Step ${index + 1}" class="step-image">
+              <div class="step-content">
+                <span class="step-number">Step ${index + 1} <span class="step-time">${step.time}</span></span>
+                <p class="step-desc">${step.desc}</p>
+              </div>
+            </div>
+          `).join('')}
+        </div>
       </div>
     `;
   }
