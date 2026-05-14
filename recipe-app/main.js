@@ -48,6 +48,7 @@ class AppNav extends HTMLElement {
       <nav>
         <a href="/recipe-app/" class="${activeApp === 'recipe' ? 'active' : ''}">🍳 Recipes</a>
         <a href="/toto-app/" class="${activeApp === 'toto' ? 'active' : ''}">🔢 Toto</a>
+        <a href="/vision-app/" class="${activeApp === 'vision' ? 'active' : ''}">🤖 Vision</a>
         <a href="/" style="opacity: 0.6">🏠</a>
       </nav>
     `;
@@ -127,6 +128,7 @@ class RecipeFinder extends HTMLElement {
       currentRecipe: null,
       recommendations: []
     };
+    this.lastRecipeId = null;
   }
 
   connectedCallback() {
@@ -174,7 +176,7 @@ class RecipeFinder extends HTMLElement {
 
   findRecipes() {
     const userIngredients = this.allIngredients;
-    const filtered = recipes.filter(r => {
+    let filtered = recipes.filter(r => {
       const matchCat = this.state.category === 'All' || r.category === this.state.category;
       const matchDiff = this.state.difficulty === 'All' || r.difficulty === this.state.difficulty;
       const matchTime = r.time <= this.state.maxTime;
@@ -194,20 +196,29 @@ class RecipeFinder extends HTMLElement {
       return matchCat && matchDiff && matchTime;
     });
 
+    // Remove the last shown recipe to avoid immediate repeats
+    if (filtered.length > 1) {
+      filtered = filtered.filter(r => r.id !== this.lastRecipeId);
+    }
+
     if (filtered.length === 0) {
       this.state.currentRecipe = null;
     } else {
+      // Prioritize match score if searching by ingredient
       const pool = userIngredients.length > 0 
         ? filtered.sort((a, b) => b.matchScore - a.matchScore).slice(0, 3)
         : filtered;
       
-      this.state.currentRecipe = pool[Math.floor(Math.random() * pool.length)];
+      const newRecipe = pool[Math.floor(Math.random() * pool.length)];
+      this.state.currentRecipe = newRecipe;
+      this.lastRecipeId = newRecipe.id;
     }
     this.renderRecipe();
   }
 
   selectRecipe(recipe) {
     this.state.currentRecipe = recipe;
+    this.lastRecipeId = recipe.id;
     this.renderRecipe();
     this.shadowRoot.getElementById('display').scrollIntoView({ behavior: 'smooth' });
   }

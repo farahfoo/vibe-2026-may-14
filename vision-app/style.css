@@ -1,0 +1,47 @@
+:root {
+  --bg-color: #f0f2f5;
+  --text-color: #1c1e21;
+  --card-bg: #ffffff;
+  --card-shadow: 0 12px 28px 0 rgba(0, 0, 0, 0.2);
+  --accent-color: #6c5ce7;
+  --accent-hover: #a29bfe;
+  --transition-speed: 0.3s;
+}
+
+[data-theme="dark"] {
+  --bg-color: #18191a;
+  --text-color: #e4e6eb;
+  --card-bg: #242526;
+  --card-shadow: 0 12px 28px 0 rgba(0, 0, 0, 0.5);
+  --accent-color: #a29bfe;
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter', -apple-system, sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition: background-color var(--transition-speed), color var(--transition-speed);
+  min-height: 100vh;
+  padding: 5rem 1rem 2rem;
+}
+
+.app-container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+header h1 {
+  font-size: 2.5rem;
+  margin: 0;
+  color: var(--accent-color);
+}
+
+vision-classifier {
+  display: block;
+}

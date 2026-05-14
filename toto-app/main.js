@@ -46,6 +46,7 @@ class AppNav extends HTMLElement {
       <nav>
         <a href="/recipe-app/" class="${activeApp === 'recipe' ? 'active' : ''}">🍳 Recipes</a>
         <a href="/toto-app/" class="${activeApp === 'toto' ? 'active' : ''}">🔢 Toto</a>
+        <a href="/vision-app/" class="${activeApp === 'vision' ? 'active' : ''}">🤖 Vision</a>
         <a href="/" style="opacity: 0.6">🏠</a>
       </nav>
     `;

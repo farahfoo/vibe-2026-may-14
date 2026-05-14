@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Vision Classifier</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <app-nav active="vision"></app-nav>
+  <theme-toggle></theme-toggle>
+  <div class="app-container">
+    <header>
+      <h1>🤖 AI Vision Classifier</h1>
+      <p>Recognize objects in real-time using your custom model.</p>
+    </header>
+    <vision-classifier></vision-classifier>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest/dist/teachablemachine-image.min.js"></script>
+  <script type="module" src="main.js"></script>
+</body>
+</html>
