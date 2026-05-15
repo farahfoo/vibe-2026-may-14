@@ -111,12 +111,13 @@
       font-family: 'Hanken Grotesk', sans-serif;
     }
   </style>
+<script src="../shared/nav.js" type="module"></script>
 </head>
 <body class="bg-surface text-on-surface min-h-screen pb-24">
 <div class="p-4 bg-surface-dark">
   <div class="flex gap-4">
-    <a href="./index.html" class="px-4 py-2 text-white hover:bg-surface-variant rounded-md">Existing Page</a>
-    <a href="./index_new.html" class="px-4 py-2 text-white bg-primary-container rounded-md">New Page</a>
+    <a href="./option1.html" class="px-4 py-2 text-white hover:bg-surface-variant rounded-md">Option 1</a>
+    <a href="./option2.html" class="px-4 py-2 text-white bg-primary-container rounded-md">Option 2</a>
   </div>
 </div>
 <!-- TopAppBar -->
@@ -339,31 +340,7 @@
 </div>
 </div>
 </main>
-<!-- BottomNavBar -->
-<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center pt-2 pb-safe px-2 bg-white/90 backdrop-blur-2xl border-t border-outline-variant/30 shadow-[0_-2px_10px_rgba(0,0,0,0.05)]">
-<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-sc-navy transition-colors active:scale-90 duration-200" href="#">
-<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
-<span class="font-label-sm mt-1">Dashboard</span>
-</a>
-<a class="flex flex-col items-center justify-center text-sc-navy relative px-4 py-1" href="#">
-<span class="material-symbols-outlined" data-icon="lock" style="font-variation-settings: 'FILL' 1;">lock</span>
-<span class="font-label-sm mt-1 font-bold">Vault</span>
-<span class="absolute -bottom-1 w-1 h-1 bg-sc-navy rounded-full"></span>
-</a>
-<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-sc-navy transition-colors active:scale-90 duration-200" href="#">
-<span class="material-symbols-outlined" data-icon="swap_horiz">swap_horiz</span>
-<span class="font-label-sm mt-1">Trade</span>
-</a>
-<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-sc-navy transition-colors active:scale-90 duration-200 relative" href="#">
-<span class="material-symbols-outlined" data-icon="verified_user">verified_user</span>
-<span class="font-label-sm mt-1">Approvals</span>
-<span class="absolute top-0 right-3 w-2 h-2 bg-error-red rounded-full border-2 border-white"></span>
-</a>
-<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-sc-navy transition-colors active:scale-90 duration-200" href="#">
-<span class="material-symbols-outlined" data-icon="account_circle">account_circle</span>
-<span class="font-label-sm mt-1">Profile</span>
-</a>
-</nav>
+<nav-bar></nav-bar>
 <div id="qr-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); justify-content: center; align-items: center;">
   <div style="background: white; padding: 2rem; border-radius: 1rem;">
     <qr-code text="https://www.google.com" size="256"></qr-code>
