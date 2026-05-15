@@ -6,6 +6,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Hanken+Grotesk:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script src="../shared/qr.js"></script>
 <script id="tailwind-config">
   tailwind.config = {
     darkMode: "class",
@@ -125,6 +126,7 @@
 <span class="font-headline-lg-mobile text-xl font-bold tracking-tight text-primary">NEXUS CUSTODY</span>
 </div>
 <div class="flex items-center gap-4">
+<button onclick="document.getElementById('qr-modal').style.display='flex'" class="ml-4 text-black">QR Code</button>
 <button class="material-symbols-outlined text-on-surface-variant hover:bg-surface-variant p-2 rounded-full transition-transform active:scale-95" data-icon="security">security</button>
 </div>
 </header>
@@ -362,4 +364,10 @@
 <span class="font-label-sm mt-1">Profile</span>
 </a>
 </nav>
+<div id="qr-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); justify-content: center; align-items: center;">
+  <div style="background: white; padding: 2rem; border-radius: 1rem;">
+    <qr-code text="https://www.google.com" size="256"></qr-code>
+    <button onclick="document.getElementById('qr-modal').style.display='none'" style="display: block; margin-top: 1rem;">Close</button>
+  </div>
+</div>
 </body></html>

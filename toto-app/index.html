@@ -4,11 +4,13 @@
   <title>Toto Number Generator</title>
   <link rel="stylesheet" href="style.css">
   <script src="../shared/nav.js"></script>
+  <script src="../shared/qr.js"></script>
 </head>
 <body>
   <app-nav active="toto"></app-nav>
   <theme-toggle></theme-toggle>
   <div class="content-container">
+    <button onclick="document.getElementById('qr-modal').style.display='flex'">QR Code</button>
     <toto-number-generator></toto-number-generator>
   </div>
   <div class="disqus-container">
@@ -33,5 +35,11 @@
     })();
   </script>
   <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  <div id="qr-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); justify-content: center; align-items: center;">
+    <div style="background: white; padding: 2rem; border-radius: 1rem;">
+      <qr-code text="https://vibe-2026-may-14-b2e.pages.dev/toto-app/" size="256"></qr-code>
+      <button onclick="document.getElementById('qr-modal').style.display='none'" style="display: block; margin-top: 1rem;">Close</button>
+    </div>
+  </div>
 </body>
 </html>

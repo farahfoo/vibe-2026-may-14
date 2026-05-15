@@ -35,13 +35,19 @@ This project is a collection of web applications that demonstrate the use of mod
 
 - All applications include a Disqus comment section to allow for user feedback and discussion.
 
+### QR Code Generator
+
+- A shared Web Component that generates a QR code for the current application's URL.
+- The component is available in all applications via a button.
+
 ## Current Plan
 
-### Add Live Chat Widget
+### Add QR Code Generator
 
-- **`shared/chat.js`**: Create a shared live chat widget component.
-- **`custody-app/index.html`**: Add the shared live chat widget component.
-- **`recipe-app/index.html`**: Add the shared live chat widget component.
-- **`toto-app/index.html`**: Add the shared live chat widget component.
-- **`vision-app/index.html`**: Add the shared live chat widget component.
+- **`shared/qr.js`**: Create a shared QR code generator component.
+- **`custody-app/option1.html`**: Add the shared QR code component.
+- **`custody-app/option2.html`**: Add the shared QR code component.
+- **`recipe-app/index.html`**: Add the shared QR code component.
+- **`toto-app/index.html`**: Add the shared QR code component.
+- **`vision-app/index.html`**: Add the shared QR code component.
 - **`blueprint.md`**: Update the blueprint to include the new feature.
