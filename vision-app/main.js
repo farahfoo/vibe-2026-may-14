@@ -1,59 +1,3 @@
-class AppNav extends HTMLElement {
-  constructor() {
-    super();
-    this.attachShadow({ mode: 'open' });
-  }
-
-  connectedCallback() {
-    const activeApp = this.getAttribute('active') || '';
-    this.shadowRoot.innerHTML = `
-      <style>
-        :host {
-          position: fixed;
-          top: 1.2rem;
-          left: 50%;
-          transform: translateX(-50%);
-          z-index: 1000;
-        }
-        nav {
-          background: var(--card-bg, #fff);
-          padding: 0.4rem;
-          border-radius: 40px;
-          box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-          display: flex;
-          gap: 0.3rem;
-          border: 1px solid rgba(0,0,0,0.05);
-          backdrop-filter: blur(10px);
-        }
-        a {
-          text-decoration: none;
-          padding: 0.6rem 1.2rem;
-          border-radius: 30px;
-          font-size: 0.85rem;
-          font-weight: 800;
-          color: var(--text-color, #333);
-          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-          text-transform: uppercase;
-          letter-spacing: 0.5px;
-        }
-        a:hover { background: rgba(0,0,0,0.05); transform: translateY(-1px); }
-        a.active {
-          background: var(--accent-color, #6c5ce7);
-          color: white;
-          box-shadow: 0 4px 12px rgba(108, 92, 231, 0.3);
-        }
-      </style>
-      <nav>
-        <a href="/recipe-app/" class="${activeApp === 'recipe' ? 'active' : ''}">🍳 Recipes</a>
-        <a href="/toto-app/" class="${activeApp === 'toto' ? 'active' : ''}">🔢 Toto</a>
-        <a href="/vision-app/" class="${activeApp === 'vision' ? 'active' : ''}">🤖 Vision</a>
-        <a href="/" style="opacity: 0.6">🏠</a>
-      </nav>
-    `;
-  }
-}
-customElements.define('app-nav', AppNav);
-
 class ThemeToggle extends HTMLElement {
   constructor() {
     super();
@@ -259,4 +203,3 @@ class VisionClassifier extends HTMLElement {
   }
 }
 customElements.define('vision-classifier', VisionClassifier);
-
