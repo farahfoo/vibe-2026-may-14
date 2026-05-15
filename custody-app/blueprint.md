@@ -1,0 +1,1 @@
+I will build out the "Custody.io" app based on the design you provided. First, I will create the necessary files and add a link to the new app in your main portal.

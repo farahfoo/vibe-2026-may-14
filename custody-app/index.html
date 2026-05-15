@@ -1,0 +1,311 @@
+<html class="dark"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@500&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .security-overlay {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(24px);
+        }
+        .pulse-ring {
+            position: relative;
+        }
+        .pulse-ring::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: #00E0A9;
+            border-radius: 50%;
+            opacity: 0.3;
+            transform: scale(1.5);
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-dark": "#12141A",
+                        "outline": "#8e909d",
+                        "on-tertiary-fixed-variant": "#00513b",
+                        "tertiary-container": "#00402e",
+                        "primary-fixed": "#dbe1ff",
+                        "on-primary-fixed": "#00174b",
+                        "surface-variant": "#333539",
+                        "surface-container-highest": "#333539",
+                        "on-surface-variant": "#c4c6d4",
+                        "surface": "#111318",
+                        "on-tertiary": "#003828",
+                        "surface-container-low": "#1a1c20",
+                        "secondary-fixed-dim": "#77d1ff",
+                        "secondary-fixed": "#c2e8ff",
+                        "surface-bright": "#37393e",
+                        "on-primary-fixed-variant": "#1c4197",
+                        "on-secondary": "#003549",
+                        "error-container": "#93000a",
+                        "surface-container-lowest": "#0c0e12",
+                        "outline-variant": "#444652",
+                        "primary": "#b4c5ff",
+                        "error": "#ffb4ab",
+                        "surface-container": "#1e2024",
+                        "background": "#111318",
+                        "surface-tint": "#b4c5ff",
+                        "inverse-surface": "#e2e2e8",
+                        "on-secondary-container": "#003a4f",
+                        "primary-fixed-dim": "#b4c5ff",
+                        "institutional-navy": "#002159",
+                        "on-surface": "#e2e2e8",
+                        "tertiary-fixed": "#49fec5",
+                        "secondary": "#77d1ff",
+                        "tertiary": "#05e1aa",
+                        "surface-container-high": "#282a2e",
+                        "secondary-container": "#03aae1",
+                        "on-primary-container": "#7f9df8",
+                        "on-background": "#e2e2e8",
+                        "primary-container": "#003087",
+                        "on-error": "#690005",
+                        "on-secondary-fixed-variant": "#004d68",
+                        "tertiary-fixed-dim": "#05e1aa",
+                        "surface-dim": "#111318",
+                        "on-tertiary-container": "#00b689",
+                        "on-error-container": "#ffdad6",
+                        "inverse-on-surface": "#2f3035",
+                        "on-primary": "#002a78",
+                        "cold-storage-glass": "rgba(255, 255, 255, 0.05)",
+                        "on-tertiary-fixed": "#002116",
+                        "inverse-primary": "#3959b0",
+                        "validation-pulse": "#00E0A9",
+                        "on-secondary-fixed": "#001e2c"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "grid-margin-mobile": "1rem",
+                        "grid-margin-desktop": "4rem",
+                        "container-padding": "2rem",
+                        "widget-gap": "1.5rem",
+                        "section-stack": "3rem"
+                    },
+                    "fontFamily": {
+                        "body-md": ["Inter"],
+                        "data-tabular": ["Inter"],
+                        "display-lg": ["Inter"],
+                        "headline-lg-mobile": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "label-mono": ["JetBrains Mono"]
+                    },
+                    "fontSize": {
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "data-tabular": ["14px", {"lineHeight": "20px", "fontWeight": "600"}],
+                        "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "600"}],
+                        "label-mono": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background font-body-md min-h-screen pb-24">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 flex justify-between items-center px-grid-margin-mobile py-4 bg-surface-dark/80 backdrop-blur-xl border-b border-outline-variant">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary" data-icon="fingerprint">fingerprint</span>
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile font-bold text-primary">Custody.io</h1>
+</div>
+<div class="flex items-center gap-2 px-3 py-1 bg-surface-variant rounded-full">
+<span class="w-2 h-2 rounded-full bg-validation-pulse shadow-[0_0_8px_#00E0A9]"></span>
+<span class="font-label-mono text-label-mono text-on-surface-variant">V-Key Active</span>
+</div>
+</header>
+<main class="pt-24 px-grid-margin-mobile max-w-7xl mx-auto md:px-grid-margin-desktop grid grid-cols-1 lg:grid-cols-12 gap-widget-gap">
+<!-- Left Column: Pending List -->
+<section class="lg:col-span-4 space-y-4">
+<div class="flex items-center justify-between mb-4">
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile">Pending Requests</h2>
+<span class="bg-primary-container text-on-primary-container px-2 py-0.5 rounded font-label-mono text-label-mono">3 Urgent</span>
+</div>
+<!-- Transaction Item Active -->
+<div class="p-4 rounded-xl border border-primary/30 bg-surface-container-high cursor-pointer transition-all hover:border-primary">
+<div class="flex justify-between items-start mb-2">
+<span class="font-label-mono text-label-mono text-on-surface-variant">TX-8829-INST</span>
+<span class="text-validation-pulse font-label-mono text-label-mono">2/3 Signed</span>
+</div>
+<div class="font-headline-lg-mobile text-headline-lg-mobile mb-1">540.00 ETH</div>
+<div class="text-on-surface-variant text-sm mb-3">To: Treasury Cold Storage A</div>
+<div class="flex -space-x-2">
+<img class="w-8 h-8 rounded-full border-2 border-surface-container-high object-cover" data-alt="Professional headshot of a financial officer in a sleek corporate environment, soft directional lighting, modern banking aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBUU4fxH56QVNjn7VgFv6-DmUsmIMyB2lNAsMg6qh4Mzca8Dk0nwFWPVmxci1RXRWp4akUoQZFerbRAL2x0l1SOj-RdmpRjSn_Jnr3EfgWD6sUJK1hD5Yv0PO39ZBLU94LhK1KKv68trHEWsLsP76CxPtFHCggCNA5mvNsk3tsWyhMbJnyVMVB71R67efDueER3egnpt1DjCjL4LcJBny0d9jHHd12PdY6CPeyHyXdgWJmUnpx9aQEQNFF6AwZcKue7zmaG0cXK4MNs"/>
+<img class="w-8 h-8 rounded-full border-2 border-surface-container-high object-cover" data-alt="Portrait of a female corporate treasurer, high-key studio lighting, sophisticated professional attire, institutional color palette." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB2_YQiITobxzk8m2MMqUqZgOC_bk6se2lOXUq4QuoSw3kZKndAu0FivZZw9Pn4ck4N9ulzOMwccYW6-q7Zd3qwuqw0DJsfQlCV_d6uJURfLN3BxTv14A0iEP8EnKATnlATlZNapIm9fGElxkcjB16yVaW9AObm_ewhVV6XSHzRzvjNm1VSLd82_QAVYpSKFJvoenL7PrqyGc2g5BVMi4meFqXyGq8Up3TmhmR8v3C2HYlg5oENdDVp_XNpgAvcJKVN8aknO82XcawL"/>
+<div class="w-8 h-8 rounded-full border-2 border-surface-container-high bg-surface-variant flex items-center justify-center text-[10px] font-bold">AJ</div>
+</div>
+</div>
+<!-- Transaction Item Pending -->
+<div class="p-4 rounded-xl border border-outline-variant bg-surface-container-low cursor-pointer hover:bg-surface-container transition-colors">
+<div class="flex justify-between items-start mb-2">
+<span class="font-label-mono text-label-mono text-on-surface-variant">TX-8830-INST</span>
+<span class="text-outline font-label-mono text-label-mono">1/3 Signed</span>
+</div>
+<div class="font-headline-lg-mobile text-headline-lg-mobile mb-1">1,250,000 USDC</div>
+<div class="text-on-surface-variant text-sm">To: Payroll Liquidity Pool</div>
+</div>
+<div class="p-4 rounded-xl border border-outline-variant bg-surface-container-low cursor-pointer hover:bg-surface-container transition-colors">
+<div class="flex justify-between items-start mb-2">
+<span class="font-label-mono text-label-mono text-on-surface-variant">TX-8831-INST</span>
+<span class="text-outline font-label-mono text-label-mono">0/3 Signed</span>
+</div>
+<div class="font-headline-lg-mobile text-headline-lg-mobile mb-1">42.50 BTC</div>
+<div class="text-on-surface-variant text-sm">To: Institutional Yield Vault</div>
+</div>
+</section>
+<!-- Right Column: Detail View -->
+<section class="lg:col-span-8">
+<div class="glass-panel rounded-xl overflow-hidden">
+<!-- Header -->
+<div class="p-6 border-b border-outline-variant bg-surface-container-highest/50 flex justify-between items-center">
+<div>
+<div class="flex items-center gap-2 mb-1">
+<span class="font-label-mono text-label-mono text-primary uppercase tracking-widest">Selected Transaction</span>
+<span class="material-symbols-outlined text-sm text-primary" data-icon="verified">verified</span>
+</div>
+<h3 class="font-headline-lg text-headline-lg">Transfer Authorization</h3>
+</div>
+<div class="text-right">
+<div class="font-label-mono text-label-mono text-on-surface-variant">Asset Class</div>
+<div class="font-bold text-primary">Ethereum Mainnet</div>
+</div>
+</div>
+<!-- Transaction Summary Body -->
+<div class="p-8 space-y-8">
+<!-- Amount Display -->
+<div class="text-center py-6 border-b border-outline-variant/30">
+<div class="text-on-surface-variant mb-2">Requested Amount</div>
+<div class="font-display-lg text-display-lg tracking-tight">540.00 <span class="text-primary-container bg-primary px-3 py-1 rounded-lg text-headline-lg-mobile">ETH</span></div>
+<div class="text-on-surface-variant mt-2">≈ $1,242,590.12 USD</div>
+</div>
+<!-- Quorum Progress -->
+<div class="space-y-4">
+<div class="flex justify-between items-end">
+<h4 class="font-bold text-on-surface">Quorum Status: 2 of 3 Required</h4>
+<span class="font-label-mono text-label-mono text-validation-pulse">66% Collected</span>
+</div>
+<div class="h-3 w-full bg-surface-variant rounded-full overflow-hidden flex">
+<div class="h-full bg-validation-pulse w-2/3 shadow-[0_0_12px_#00E0A9]"></div>
+</div>
+</div>
+<!-- S2B Mandate Structure -->
+<div class="grid md:grid-cols-2 gap-6">
+<!-- Initiator -->
+<div class="p-5 rounded-xl border border-outline-variant bg-surface-container-lowest">
+<div class="flex items-center gap-2 mb-4">
+<span class="material-symbols-outlined text-primary" data-icon="person_edit">person_edit</span>
+<span class="font-label-mono text-label-mono uppercase tracking-wider">Initiator</span>
+</div>
+<div class="flex items-center gap-3">
+<img class="w-12 h-12 rounded-lg object-cover" data-alt="Portrait of a senior male executive in a high-tech financial workspace, professional lighting, corporate modernism style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD_Y2B61pHK2Kg_BJYktDFapfTwmgTIUx8xVbR0QIrs1rhmEZwy48mWGT7OZtf6qhHeuRdx3HI-DuvBNwqvuMe928Y0m7gu5ghmaKjqJIM__JGZ5EmMrtFp1lF1P2ZMbh-owAueNUysO50IfPVdL577zup3-VlFrmiY53AkHDwRMHXpuVAIL2YueG1TS2sIkqPLcDA5pHAJa7_9bpUiq4jImpi2ezvvTT77qRVgnXAII149MlN46pXq_an_X6CdItx4zsvRllds46To"/>
+<div>
+<div class="font-bold">Marcus Sterling</div>
+<div class="text-sm text-on-surface-variant">Treasury Lead • 09:42 UTC</div>
+</div>
+</div>
+</div>
+<!-- Signers / Authorizers -->
+<div class="p-5 rounded-xl border border-outline-variant bg-surface-container-lowest">
+<div class="flex items-center gap-2 mb-4">
+<span class="material-symbols-outlined text-tertiary" data-icon="rule">rule</span>
+<span class="font-label-mono text-label-mono uppercase tracking-wider">Authorizers</span>
+</div>
+<div class="space-y-3">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<img class="w-8 h-8 rounded-full object-cover grayscale opacity-80" data-alt="Close-up of a professional woman in a sleek office environment, cinematic lighting, corporate blue tones." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCo-paOntRvbf53CY69zpJ7wS0nm57nid45lZwyfPsT0MCO5tsqVa0COTvY7JN58_LblFyxVjkzIvdk5MJ7d_HbApJqSygKBH9c0ww9WEPne6E83-uw_RLAh-9sDCrM-_gfp73E7UIy44cqGLIvwzhZSM5wgRo0GyDc61QGPAUdRYdd7ESeaPIITK4TwKsN41Q65YXG2PxPKL0tBP-1S-AzrlTFtEUst8rVnWJAovXJbp3W7B9vZN5vf-2eRZtsaptP4SetpRqLAsSA"/>
+<span class="text-sm">Elena Rodriguez</span>
+</div>
+<span class="material-symbols-outlined text-validation-pulse" data-icon="check_circle" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-surface-variant flex items-center justify-center text-xs font-bold">AJ</div>
+<span class="text-sm">Alexander J.</span>
+</div>
+<span class="material-symbols-outlined text-outline" data-icon="pending">pending</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Security Validation Area -->
+<div class="security-overlay p-6 rounded-xl border border-primary/20 space-y-6">
+<div class="flex items-start gap-4">
+<div class="w-12 h-12 bg-primary-container rounded-full flex items-center justify-center pulse-ring">
+<span class="material-symbols-outlined text-primary" data-icon="fingerprint" style="font-variation-settings: 'wght' 700;">fingerprint</span>
+</div>
+<div>
+<h4 class="font-bold text-on-surface">Biometric Authentication Required</h4>
+<p class="text-sm text-on-surface-variant">Verify the multi-sig payload on your hardware key or use V-Key biometrics to finalize this transaction.</p>
+</div>
+</div>
+<div class="flex flex-col sm:flex-row gap-4">
+<button class="flex-1 bg-primary-container text-on-primary-container hover:bg-primary hover:text-on-primary py-4 rounded-xl font-bold flex items-center justify-center gap-2 transition-all active:scale-95 shadow-lg shadow-institutional-navy/40">
+<span class="material-symbols-outlined" data-icon="ink_pen">ink_pen</span>
+                                Approve Transaction
+                            </button>
+<button class="flex-1 border border-error/30 text-error hover:bg-error/10 py-4 rounded-xl font-bold flex items-center justify-center gap-2 transition-all active:scale-95">
+<span class="material-symbols-outlined" data-icon="cancel">cancel</span>
+                                Reject &amp; Close
+                            </button>
+</div>
+</div>
+<!-- Footnote Security -->
+<div class="flex items-center justify-center gap-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-sm" data-icon="shield">shield</span>
+<span class="text-xs font-label-mono">EAL7+ SECURE ENCLAVE ACTIVE • SESSION ENCRYPTED</span>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 w-full z-50 flex justify-around items-center px-grid-margin-mobile pb-4 pt-2 bg-surface-container/90 backdrop-blur-md border-t border-outline-variant shadow-lg">
+<div class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary transition-colors cursor-pointer group">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-label-mono text-label-mono">Dashboard</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary transition-colors cursor-pointer group">
+<span class="material-symbols-outlined" data-icon="lock">lock</span>
+<span class="font-label-mono text-label-mono">Vault</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary transition-colors cursor-pointer group">
+<span class="material-symbols-outlined" data-icon="swap_horiz">swap_horiz</span>
+<span class="font-label-mono text-label-mono">Trade</span>
+</div>
+<div class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-full py-1 px-4 scale-95 transition-all">
+<span class="material-symbols-outlined" data-icon="verified_user" style="font-variation-settings: 'FILL' 1;">verified_user</span>
+<span class="font-label-mono text-label-mono">Approvals</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary transition-colors cursor-pointer group">
+<span class="material-symbols-outlined" data-icon="account_circle">account_circle</span>
+<span class="font-label-mono text-label-mono">Profile</span>
+</div>
+</nav>
+</body></html>
