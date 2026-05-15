@@ -25,20 +25,23 @@ This project is a collection of web applications that demonstrate the use of mod
 
 - A Web Component that uses a pre-trained model to classify images from a webcam or uploaded file.
 
+### Live Chat Widget
+
+- A Web Component that provides a live chat widget for all applications.
+- The widget includes a floating action button that opens a chat window.
+- The chat window has a header, a message area, and a text input with a send button.
+
 ### Disqus Comment Section
 
 - All applications include a Disqus comment section to allow for user feedback and discussion.
 
 ## Current Plan
 
-### Refactor Navigation
+### Add Live Chat Widget
 
-- **`shared/nav.js`**: Create a shared navigation component.
-- **`custody-app/index.html`**: Add the shared navigation component.
-- **`recipe-app/index.html`**: Update the navigation to use the shared component.
-- **`toto-app/index.html`**: Update the navigation to use the shared component.
-- **`vision-app/index.html`**: Update the navigation to use the shared component.
-- **`recipe-app/main.js`**: Remove the old navigation component.
-- **`toto-app/main.js`**: Remove the old navigation component.
-- **`vision-app/main.js`**: Remove the old navigation component.
+- **`shared/chat.js`**: Create a shared live chat widget component.
+- **`custody-app/index.html`**: Add the shared live chat widget component.
+- **`recipe-app/index.html`**: Add the shared live chat widget component.
+- **`toto-app/index.html`**: Add the shared live chat widget component.
+- **`vision-app/index.html`**: Add the shared live chat widget component.
 - **`blueprint.md`**: Update the blueprint to include the new feature.
